@@ -1,4 +1,8 @@
-import '../styles/globals.css'
+import { useEffect } from 'react'
+
+import '../styles/globals.scss'
+
+import Head from 'next/head'
 
 import type { AppProps } from 'next/app'
 
@@ -11,8 +15,14 @@ const navbarItems: navbarItemsProps[] = [
 ]
 
 export default function DefApp({ Component, pageProps }: AppProps) {
+  useEffect(() => {
+    document.querySelector('html').dataset.theme = 'dark';
+  }, []);
   return (
     <>
+      <Head>
+        <title>code2gether</title>
+      </Head>
       <NavLayout pageProps={navbarItems} />
       
       <Component {...pageProps} />

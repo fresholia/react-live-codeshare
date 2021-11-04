@@ -30,7 +30,7 @@ export default function Navbar({ Component, pageProps }: AppProps) {
                 }
             </div>
             <div className={styles.logo}>
-                <span>{variables.projectName}</span>
+                <span translate="no">{variables.projectName}</span>
             </div>
             
             <div className={styles.account}>

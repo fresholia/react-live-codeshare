@@ -1,0 +1,68 @@
+div.wrapper {
+    position: relative;
+    width: 100%;
+    height: calc((100vh) - var(--navHeight));
+    overflow: auto;
+    color: var(--textcolor);
+
+    display: grid;
+    
+    grid-template: auto / calc(100% - var(--itemsize)) var(--itemsize);
+
+    div.codeContent {
+        position: relative;
+        width: 100%;
+        height: 100%;
+        display: flex;
+        color: var(--textcolor);
+    }
+
+    div.actions {
+        position: relative;
+        display: flex;
+        flex-direction: column;
+        background: #0e0e0e;
+        width: 100%;
+        height: 100%;
+
+        justify-content: space-between;
+
+        div.item {
+            position: relative;
+            background-color: #151515;
+            border-bottom: 1px solid #212121;
+
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            width: var(--itemsize);
+            height: var(--itemsize);
+
+            cursor: pointer;
+
+            transition: .2s all linear;
+
+            &::before {
+                content: ' ';
+                position: absolute;
+                width: 100%;
+                height: 100%;
+                backdrop-filter: blur(20px);
+                background-position: 0px;
+                background-image: linear-gradient(43deg, #4158D0 0%, #C850C0 46%, #FFCC70 100%);
+                opacity: 0;
+                transition: .2s all linear;
+            }
+            
+            svg {
+                opacity: .8;
+            }
+
+            &:hover {
+                &::before {
+                    opacity: 1;
+                }
+            }
+        }
+    }
+}

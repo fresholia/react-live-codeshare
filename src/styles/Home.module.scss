@@ -1,0 +1,32 @@
+div.wrapper {
+  background: linear-gradient(180deg, rgba(0, 0, 0, 0) 14.71%, #07FFFF 300%);
+  width: 100%;
+  height: calc((100vh) - var(--navHeight));
+
+  color: #fff;
+
+  div.container {
+    position: relative;
+    width: 100%;
+    height: auto;
+    display: flex;
+    align-items: center;
+    text-align: center;
+    justify-content: center;
+    flex-direction: column;
+
+    div.content {
+      h2 {
+        font-size: 5rem;
+      }
+
+      h5 {
+        font-size: 1.5rem;
+        max-width: 50%;
+        margin: 0 auto;
+        font-weight: normal;
+        padding-bottom: 1rem;
+      }
+    }
+  }
+}
