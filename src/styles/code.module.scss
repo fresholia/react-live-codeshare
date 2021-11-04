@@ -1,3 +1,11 @@
+div.header {
+    width: 100%;
+    height: 25px;
+    background: #212121;
+    border-bottom: 1px solid #121212;
+    color: var(--textcolor);
+}
+
 div.wrapper {
     position: relative;
     width: 100%;

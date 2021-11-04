@@ -55,7 +55,7 @@ const changeTheme = () => {
     }
 }
 
-export default function CodeActions() {
+export default function CodeActions({Component, pageProps}) {
     return (
         <>
             <div>
