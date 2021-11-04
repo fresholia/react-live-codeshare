@@ -6,6 +6,7 @@ import styles from '../../styles/code.module.scss';
 
 import CodeActions from '../../components/ActionsComponent';
 
+import CodeEditor from '../../components/codemirror/CodeBlockComponent'
 
 const Post: NextPage = () => {
     const router = useRouter()
@@ -15,7 +16,7 @@ const Post: NextPage = () => {
         <>
             <div className={styles.wrapper}>
                 <div className={styles.codeContent}>
-                    Burası kod içeriği
+                    <CodeEditor />
                 </div>
                 <div className={styles.actions}>
                     <CodeActions />

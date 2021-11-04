@@ -56,6 +56,10 @@ button.btn {
   }
 }
 
+.CodeMirror {
+  height: 100%!important;
+}
+
 @media (prefers-reduced-motion) {
   * {
     transition: none!important;
