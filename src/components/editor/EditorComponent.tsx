@@ -6,11 +6,11 @@ import 'codemirror/theme/material-darker.css'
 
 import styles from '../../styles/code.module.scss'
 
-export default function EditorSection({Component, pageProps}) {
+export default function EditorSection() {
     return (
         <CodeMirror
             className = {styles.mirror}
-            value = {pageProps.content}
+            value = ""
             options = {
                 {
                     theme: 'material-darker',

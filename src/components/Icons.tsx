@@ -1,13 +1,11 @@
 import type { iconEnum } from '../@types/Icons.d'
 
 const SettingsIcon = (e: iconEnum) => {
-
-    console.log(e.fillColor)
     return (
         <svg fill={e.fillColor} id="more" xmlns="http://www.w3.org/2000/svg" width={e.size} height={e.size / 3} viewBox="0 0 20 6">
-            <path id="Path_905" data-name="Path 905" d="M5,15a3,3,0,1,0-3-3A3,3,0,0,0,5,15Zm0-2a1,1,0,1,0-1-1A1,1,0,0,0,5,13Z" transform="translate(-2 -9)" fill-rule="evenodd"/>
-            <path id="Path_906" data-name="Path 906" d="M12,15a3,3,0,1,0-3-3A3,3,0,0,0,12,15Zm0-2a1,1,0,1,0-1-1A1,1,0,0,0,12,13Z" transform="translate(-2 -9)" fill-rule="evenodd"/>
-            <path id="Path_907" data-name="Path 907" d="M22,12a3,3,0,1,1-3-3A3,3,0,0,1,22,12Zm-2,0a1,1,0,1,1-1-1A1,1,0,0,1,20,12Z" transform="translate(-2 -9)" fill-rule="evenodd"/>
+            <path id="Path_905" data-name="Path 905" d="M5,15a3,3,0,1,0-3-3A3,3,0,0,0,5,15Zm0-2a1,1,0,1,0-1-1A1,1,0,0,0,5,13Z" transform="translate(-2 -9)" fillRule="evenodd"/>
+            <path id="Path_906" data-name="Path 906" d="M12,15a3,3,0,1,0-3-3A3,3,0,0,0,12,15Zm0-2a1,1,0,1,0-1-1A1,1,0,0,0,12,13Z" transform="translate(-2 -9)" fillRule="evenodd"/>
+            <path id="Path_907" data-name="Path 907" d="M22,12a3,3,0,1,1-3-3A3,3,0,0,1,22,12Zm-2,0a1,1,0,1,1-1-1A1,1,0,0,1,20,12Z" transform="translate(-2 -9)" fillRule="evenodd"/>
         </svg>
     )
 }
@@ -24,7 +22,7 @@ const DownloadIcon = (e: iconEnum) => {
 const PlusIcon = (e: iconEnum) => {
     return (
         <svg fill={e.fillColor} xmlns="http://www.w3.org/2000/svg" width={e.size} height={e.size} viewBox="0 0 12 12">
-            <path id="Path_6" data-name="Path 6" d="M13,7a1,1,0,0,0-2,0v4H7a1,1,0,0,0,0,2h4v4a1,1,0,0,0,2,0V13h4a1,1,0,0,0,0-2H13Z" transform="translate(-6 -6)" fill-rule="evenodd"/>
+            <path id="Path_6" data-name="Path 6" d="M13,7a1,1,0,0,0-2,0v4H7a1,1,0,0,0,0,2h4v4a1,1,0,0,0,2,0V13h4a1,1,0,0,0,0-2H13Z" transform="translate(-6 -6)" fillRule="evenodd"/>
         </svg>
     )
 }
@@ -35,7 +33,7 @@ const AboutIcon = (e: iconEnum) => {
         <svg fill={e.fillColor} id="info" xmlns="http://www.w3.org/2000/svg" width={e.size} height={e.size} viewBox="0 0 20 20">
             <path id="Path_671" data-name="Path 671" d="M11,10.979a1,1,0,1,1,2,0v6a1,1,0,0,1-2,0Z" transform="translate(-2 -2)"/>
             <path id="Path_672" data-name="Path 672" d="M12,6.051a1,1,0,1,0,1,1A1,1,0,0,0,12,6.051Z" transform="translate(-2 -2)"/>
-            <path id="Path_673" data-name="Path 673" d="M12,2A10,10,0,1,0,22,12,10,10,0,0,0,12,2ZM4,12a8,8,0,1,0,8-8A8,8,0,0,0,4,12Z" transform="translate(-2 -2)" fill-rule="evenodd"/>
+            <path id="Path_673" data-name="Path 673" d="M12,2A10,10,0,1,0,22,12,10,10,0,0,0,12,2ZM4,12a8,8,0,1,0,8-8A8,8,0,0,0,4,12Z" transform="translate(-2 -2)" fillRule="evenodd"/>
         </svg>    
     )
 }
@@ -54,7 +52,7 @@ const ErrorIcon = (e: iconEnum) => {
     return (
         <svg fill={e.fillColor} id="close-o" xmlns="http://www.w3.org/2000/svg" width={e.size} height={e.size} viewBox="0 0 22 22">
             <path id="Path_291" data-name="Path 291" d="M16.339,9.322a1,1,0,0,0-1.364-1.463L12.05,10.587,9.322,7.66A1,1,0,0,0,7.859,9.024l2.727,2.926L7.66,14.677A1,1,0,1,0,9.024,16.14l2.926-2.727,2.727,2.926a1,1,0,0,0,1.463-1.364L13.413,12.05Z" transform="translate(-1 -1)"/>
-            <path id="Path_292" data-name="Path 292" d="M1,12A11,11,0,1,1,12,23,11,11,0,0,1,1,12Zm11,9a9,9,0,1,1,9-9A9,9,0,0,1,12,21Z" transform="translate(-1 -1)" fill-rule="evenodd"/>
+            <path id="Path_292" data-name="Path 292" d="M1,12A11,11,0,1,1,12,23,11,11,0,0,1,1,12Zm11,9a9,9,0,1,1,9-9A9,9,0,0,1,12,21Z" transform="translate(-1 -1)" fillRule="evenodd"/>
         </svg>  
     )
 }

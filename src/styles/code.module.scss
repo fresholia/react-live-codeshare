@@ -23,7 +23,22 @@ div.wrapper {
         }
 
         &.noData {
-            filter: blur(10px);
+            background: var(--bgcolor);
+            position: relative;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            flex-direction: column;
+
+            div.error {
+                display: flex;
+                align-items: center;
+                justify-content: center;
+                flex-direction: column;
+                p {
+                    padding-top: 1rem; 
+                }
+            }
         }
     }
 
@@ -37,6 +52,9 @@ div.wrapper {
 
         justify-content: space-between;
 
+        &.disabled {
+            pointer-events: none;
+        }
         div.item {
             position: relative;
             background-color: #151515;
