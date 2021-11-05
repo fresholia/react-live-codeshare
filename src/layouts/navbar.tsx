@@ -11,7 +11,10 @@ import styles from '../styles/NavLayout.module.scss'
 export default function Navbar() {
     return (
         <div className={styles.navbar}>
-         
+            <div className={styles.logo}>
+                <span translate="no">{variables.projectName}</span>
+            </div>
+
             <div className={styles.items}>
                 {
                     navbarItems.map((item: navbarItemsProps) => {
@@ -25,12 +28,10 @@ export default function Navbar() {
                     })
                 }
             </div>
-            <div className={styles.logo}>
-                <span translate="no">{variables.projectName}</span>
-            </div>
+          
             
             <div className={styles.account}>
-                <p>account</p>
+                <p>Sign in</p>
             </div>
         </div>
     )

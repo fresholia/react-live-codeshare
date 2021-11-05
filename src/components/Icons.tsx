@@ -57,4 +57,13 @@ const ErrorIcon = (e: iconEnum) => {
     )
 }
 
-export { SettingsIcon, DownloadIcon, PlusIcon, AboutIcon, ThemeIcon, ErrorIcon }
+const LoadingIcon = (e: iconEnum) => {
+    return (
+        <svg fill={e.fillColor} id="spinner" xmlns="http://www.w3.org/2000/svg" width={e.size} height={e.size} viewBox="0 0 20 20">
+            <path id="Path_1252" data-name="Path 1252" d="M12,19a7,7,0,1,0-7-7A7,7,0,0,0,12,19Zm0,3A10,10,0,1,0,2,12,10,10,0,0,0,12,22Z" transform="translate(-2 -2)" fillRule="evenodd" opacity="0.2"/>
+            <path id="Path_1253" data-name="Path 1253" d="M2,12A10,10,0,0,1,12,2V5a7,7,0,0,0-7,7Z" transform="translate(-2 -2)"/>
+        </svg>
+    )
+}
+
+export { SettingsIcon, DownloadIcon, PlusIcon, AboutIcon, ThemeIcon, ErrorIcon, LoadingIcon }

@@ -1,5 +1,7 @@
 div.wrapper {
-  background: linear-gradient(180deg, rgba(0, 0, 0, 0) 14.71%, #07FFFF 300%);
+  background: var(--bgcolor);
+  background: linear-gradient(to top, rgba(72, 85, 99, .4), rgba(0, 0, 0, 0));
+  
   width: 100%;
   height: calc((100vh) - var(--navHeight));
 
@@ -8,7 +10,7 @@ div.wrapper {
   div.container {
     position: relative;
     width: 100%;
-    height: auto;
+    height: 100%;
     display: flex;
     align-items: center;
     text-align: center;
@@ -44,6 +46,32 @@ div.wrapper {
         margin: 0 auto;
         font-weight: normal;
         padding-bottom: 1rem;
+      }
+
+      div.inputSection {
+        position: relative;
+        width: 100%;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+
+        input {
+          position: relative;
+          border: none;
+          outline: none;
+          padding: 0.5rem;
+          padding-left: 1.3rem;
+          padding-right: 1.3rem;
+          border-radius: 15px;
+          font-size: 1rem;
+          background: var(--bgcolor);
+          color: var(--textgray);
+          font-weight: 500;
+          transform: all .2s linear;
+        }
+        button {
+          margin-left: 1rem;
+        }
       }
     }
   }

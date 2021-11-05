@@ -8,7 +8,7 @@ export function ErrorLayout() {
         <div className={styles.error}>
             <ErrorIcon fillColor="white" size={48} />
             <p>
-                Bir hata oluştu ve sayfa yüklenemedi, daha sonra tekrar deneyin.
+                Something went wrong, try again later!
             </p>
         </div>
     )

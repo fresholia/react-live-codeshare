@@ -6,11 +6,15 @@ import 'codemirror/theme/material-darker.css'
 
 import styles from '../../styles/code.module.scss'
 
-export default function EditorSection() {
+import type { EditorComponentType } from '../../@types/EditorComponentType.d'
+
+import { saveFile } from '../../actions/CodeActions'
+
+export default function EditorSection(e: EditorComponentType) {
     return (
         <CodeMirror
             className = {styles.mirror}
-            value = ""
+            value = {e.codeContent}
             options = {
                 {
                     theme: 'material-darker',
@@ -18,7 +22,9 @@ export default function EditorSection() {
                     lineNumbers: true
                 }
             }
-            onChange={() => null}
+            onChange = {(editor, data, value) => {
+                saveFile(e.id, value)
+            }}
       />
     )
 }

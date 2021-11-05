@@ -1,0 +1,26 @@
+div.loading {
+    position: relative;
+    width: 100%;
+    height: calc((100vh) - var(--navHeight));
+    
+    color: var(--textcolor);
+
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+
+    svg {
+        animation: rotate .5s infinite;
+        animation-timing-function: linear; 
+        @keyframes rotate {
+            from {
+                transform: rotate(0deg);
+            }
+            to {
+                transform: rotate(360deg);
+            }
+        }
+
+    }
+}

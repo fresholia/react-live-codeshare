@@ -6,9 +6,7 @@ interface navbarItemsProps {
 }
 
 
-const navbarItems: navbarItemsProps[] = [
-    { id: 1, name: 'Sign in', href: '/' },
-]
+const navbarItems: navbarItemsProps[] = []
 
 export { navbarItems }
 export type { navbarItemsProps }

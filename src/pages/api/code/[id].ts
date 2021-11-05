@@ -7,14 +7,8 @@ const prisma = new PrismaClient()
 export default async function handler(req: NextApiRequest, res: NextApiResponse) {
     const { id } = req.query
 
-    /*
-    await prisma.codeBlocks.create({
-        data: {
-            name: 'hello.js',
-            content: 'console.log("hello world")',
-        }
-    })
-    */
+    if (id === 'undefined')
+        return res.json([])
 
     const allUsers = await prisma.codeBlocks.findMany({
         where: {
@@ -25,5 +19,5 @@ export default async function handler(req: NextApiRequest, res: NextApiResponse)
     if (allUsers.length > 0)
         return res.json(allUsers)
 
-    res.end(``)
+    res.json([])
 }
