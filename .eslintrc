@@ -33,7 +33,9 @@
       "react/jsx-no-target-blank": [0],
       "react/prop-types": [0],
       "react/react-in-jsx-scope": [0],
-      "space-before-function-paren": [0]
+      "space-before-function-paren": [0],
+      "react-hooks/rules-of-hooks": "error",
+      "react-hooks/exhaustive-deps": "warn"
     },
     "settings": {
       "react": {

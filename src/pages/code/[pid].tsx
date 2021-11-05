@@ -26,13 +26,11 @@ interface pageContentEnum {
 
 const Post: NextPage = () => {
     const router = useRouter()
-    if (router.isFallback)
-        return <LoadingLayout />
-
     const { pid } = router.query
 
-    if (pid === undefined)
+    if (router.isFallback || pid === undefined || pid === 'undefined') {
         return <LoadingLayout />
+    }
 
     const [pageData, setPageData] = useState<pageContentEnum>({})
 
