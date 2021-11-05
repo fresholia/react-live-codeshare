@@ -1,5 +1,5 @@
 interface codeActionsProps {
-   id?: any;
+   id?: string;
    
 }
 

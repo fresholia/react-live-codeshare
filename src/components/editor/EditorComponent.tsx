@@ -23,7 +23,7 @@ export default function EditorSection(e: EditorComponentType) {
                 }
             }
             onChange = {(editor, data, value) => {
-                saveFile(e.id, value)
+                saveFile(e.baseId, value)
             }}
       />
     )

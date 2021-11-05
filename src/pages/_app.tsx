@@ -9,10 +9,6 @@ import type { AppProps } from 'next/app'
 import NavLayout from '../layouts/navbar'
 
 export default function DefApp({ Component, pageProps }: AppProps) {
-  useEffect(() => {
-    document.querySelector('html').dataset.theme = 'dark';
-  }, []);
-
   return (
     <>
       <Head>

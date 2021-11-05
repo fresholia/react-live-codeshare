@@ -1,4 +1,4 @@
-const saveFile = async (id: number, content: string) => {
+const saveFile = async (id?: number, content?: string) => {
     const res = await fetch(`/api/saveCode`, {
         method: 'POST',
         body: JSON.stringify([id, content]),

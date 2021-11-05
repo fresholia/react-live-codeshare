@@ -1,16 +1,7 @@
-:root[data-theme="dark"] {
+:root {
   --bgcolor: linear-gradient(180deg, rgba(0, 0, 0, 0.2) 6.72%, rgba(72, 72, 72, 0.146) 100%), #141414;
   --navcolor: #121212;
   --textcolor: rgb(242, 242, 247);
-  --textgray: rgb(169 169 169);
-  --navHeight: 80px;
-  --itemsize: 52px;
-}
-
-:root[data-theme="white"] {
-  --bgcolor: linear-gradient(180deg, rgba(255, 255, 255, 0.8) 6.72%, rgba(235, 235, 235, 1) 100%), #141414;
-  --navcolor: #f0f0f0;
-  --textcolor: rgb(19, 19, 19);
   --textgray: rgb(169 169 169);
   --navHeight: 80px;
   --itemsize: 52px;
