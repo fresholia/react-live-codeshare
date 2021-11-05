@@ -1,7 +1,5 @@
 import { useRouter } from 'next/router';
 
-import { useState } from 'React'
-
 import type { NextPage } from 'next';
 
 import styles from '../../styles/code.module.scss';
@@ -20,18 +18,18 @@ const Post: NextPage = () => {
 
     const { data, error } = useSWR('/api/code/' + pid?.toString(), fetcher)
 
-    let values = data[0];
+    const noData = typeof data === 'undefined'
+
     return (
         <>
-            <div className={styles.header}>
-                {values.name}
-            </div>
             <div className={styles.wrapper}>
-                <div className={styles.codeContent}>
-                    <CodeEditor pageProps={values} />
+                <div className={styles.codeContent + ' ' + (noData ? styles.noData : '')}>
+                    {
+                        noData ? <div className={styles.error}></div> : <CodeEditor pageProps={data[0]} />
+                    }
                 </div>
                 <div className={styles.actions}>
-                    <CodeActions pageProps={values} />
+                    <CodeActions />
                 </div>
             </div>
         </>
