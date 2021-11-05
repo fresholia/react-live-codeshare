@@ -3,15 +3,15 @@ generator client {
 }
 
 datasource db {
-  provider = "sqlite"
-  url      = "file:./dev.db"
+  provider = "postgresql"
+  url      = env("DATABASE_URL")
 }
 
 model codeBlocks {
-  id            Int       @id @default(autoincrement())
-  name          String?
-  content       String?
+  id            Int @id @default(autoincrement())
+  base_id       String
+  name          String
+  content       String
   createdAt     DateTime  @default(now()) @map(name: "created_at")
   updatedAt     DateTime  @updatedAt @map(name: "updated_at")
-  @@map(name: "codeblocks")
 }
