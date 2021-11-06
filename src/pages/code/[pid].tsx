@@ -1,7 +1,5 @@
 import { useRouter } from 'next/router'
 
-import { useEffect, useState } from 'react'
-
 import type { NextPage } from 'next'
 
 import { ErrorLayout } from '../../layouts/error'
@@ -18,11 +16,17 @@ import Head from 'next/head'
 
 import variables from '../../variables'
 
-interface pageContentEnum {
-    name?: string;
-    content?: string;
-    id?: number;
-}
+import useSWR from 'swr'
+
+const fetcher = async (url: string) => {
+    const res = await fetch(url)
+  
+    if (!res.ok) {
+      return res.status
+    }
+  
+    return res.json()
+  }
 
 const Post: NextPage = () => {
     const router = useRouter()
@@ -32,33 +36,30 @@ const Post: NextPage = () => {
         return <LoadingLayout />
     }
 
-    const [pageData, setPageData] = useState<pageContentEnum>({})
+    const { data, error } = useSWR(`/api/code/${pid}`, fetcher)
+    const pageData = typeof(data) === 'object' ? data[0] : {}
 
-    useEffect(() => {
-        const fetchData = async () => {
-            const res = await fetch(`/api/code/${pid}`)
-            const data = await res.json()
-            let values = typeof(data) === 'object' ? data[0] : {}
+    const id = pageData?.id
+    const name = pageData?.name
+    const content = pageData?.content
 
-            setPageData(values)
-        }
-        fetchData()
-    }, [])
+    const isPageValid = typeof(data) === 'object' && id
 
     return (
         <>
             <Head>
-                <title>{pageData ? (`${pageData.name} - ${variables.projectName}`) : 'loading...'}</title>
+                <title>{isPageValid ? (`${name} - ${variables.projectName}`) : `page not found - ${variables.projectName}`}</title>
             </Head>
             <div className={styles.wrapper}>
-                <div className={styles.codeContent + ' ' + (!pageData ? styles.noData : '')}>
-                    {pageData ? <CodeEditor baseId={pageData.id} codeContent={pageData.content} /> : <ErrorLayout />}
+                <div className={styles.codeContent + ' ' + (!isPageValid ? styles.noData : '')}>
+                    {isPageValid ? <CodeEditor baseId={id} codeContent={content} /> : <ErrorLayout />}
                 </div>
-                <div className={styles.actions + ' ' + (!pageData ? styles.disabled : '')}>
+                <div className={styles.actions + ' ' + (!isPageValid ? styles.disabled : '')}>
                     <CodeActions />
                 </div>
             </div>
         </>
     )
 }
+
 export default Post
