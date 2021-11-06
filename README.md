@@ -27,6 +27,20 @@ To learn more about Next.js, take a look at the following resources:
 
 You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js/) - your feedback and contributions are welcome!
 
+## Environments Variables
+
+You must create this file in order to use some libraries in the project.
+
+Go to the root directory of the project, create a file named `.env`.
+
+```env
+PUSHER_APP_ID = ""
+PUSHER_KEY = ""
+PUSHER_SECRET = ""
+PUSHER_CLUSTER = ""
+
+```
+
 ## Integrate Prisma & PostgreSQL
 
 This application needs a PostgreSQL server for data storage. We handle this easily with Prisma, all you have to do is create a PostgreSQL server.
