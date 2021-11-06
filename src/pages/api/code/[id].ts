@@ -1,8 +1,5 @@
 import { NextApiRequest, NextApiResponse } from 'next';
-import { PrismaClient } from '@prisma/client'
-
-const prisma = new PrismaClient()
-
+import { prisma } from '../../../db'
 
 export default async function handler(req: NextApiRequest, res: NextApiResponse) {
     const { id } = req.query
@@ -20,6 +17,4 @@ export default async function handler(req: NextApiRequest, res: NextApiResponse)
         return res.status(200).json(codeData)
 
     res.status(200).json({notFound: true})
-
-    await prisma.$disconnect()
 }

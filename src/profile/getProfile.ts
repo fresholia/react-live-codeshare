@@ -5,9 +5,7 @@ const getProfile = async () => {
 
     const res = await fetch(`/api/user/${profile}`)
     const data = await res.json()
-
-    console.log(data[0])
-
+    
     return data[0]
 }
 
