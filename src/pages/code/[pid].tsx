@@ -18,6 +18,8 @@ import variables from '../../variables'
 
 import useSWR from 'swr'
 
+let pageData
+
 const fetcher = async (url: string) => {
     const res = await fetch(url)
   
@@ -26,7 +28,7 @@ const fetcher = async (url: string) => {
     }
   
     return res.json()
-  }
+}
 
 const Post: NextPage = () => {
     const router = useRouter()
@@ -36,14 +38,17 @@ const Post: NextPage = () => {
         return <LoadingLayout />
     }
 
-    const { data, error } = useSWR(`/api/code/${pid}`, fetcher)
-    const pageData = typeof(data) === 'object' ? data[0] : {}
+    const { data: pageData, error } = useSWR(`/api/code/${pid}`, fetcher)
+    if (!pageData)
+        return <LoadingLayout />
+        
+    const pageDetails = typeof(pageData) === 'object' ? pageData[0] : {}
 
-    const id = pageData?.id
-    const name = pageData?.name
-    const content = pageData?.content
+    const id = pageDetails?.id
+    const name = pageDetails?.name
+    const content = pageDetails?.content
 
-    const isPageValid = typeof(data) === 'object' && id
+    const isPageValid = typeof(pageData) === 'object' && id
 
     return (
         <>
