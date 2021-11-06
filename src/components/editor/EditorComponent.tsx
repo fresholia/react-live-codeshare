@@ -1,17 +1,28 @@
-import {UnControlled as CodeMirror} from 'react-codemirror2'
+import dynamic from 'next/dynamic'
 
 import 'codemirror/lib/codemirror.css'
-
 import 'codemirror/theme/material-darker.css'
+
+const CodeMirror = dynamic(() => {
+    import('codemirror/mode/javascript/javascript')
+    import('codemirror/mode/lua/lua')
+
+    return import('react-codemirror')
+}, { ssr: false })
 
 import styles from '../../styles/code.module.scss'
 
-import type { EditorComponentType } from '../../@types/EditorComponentType.d'
+import type { EditorComponentType } from '../../@types/EditorComponentTypes.d'
 
-import { saveFile } from '../../actions/CodeActions'
+import { saveFile, saveFileRemote } from '../../actions/CodeActions'
+
+import { useEffect } from 'react'
 
 export default function EditorSection(e: EditorComponentType) {
-    return (
+    /*useEffect(() => {
+        window.onbeforeunload = () => saveFileRemote()
+    }, [])*/
+    return (CodeMirror &&
         <CodeMirror
             className = {styles.mirror}
             value = {e.codeContent}
@@ -22,8 +33,9 @@ export default function EditorSection(e: EditorComponentType) {
                     lineNumbers: true
                 }
             }
-            onChange = {(editor, data, value) => {
+            onChange = {(value) => {
                 saveFile(e.baseId, value)
+                
             }}
       />
     )

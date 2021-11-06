@@ -7,11 +7,22 @@ datasource db {
   url      = env("DATABASE_URL")
 }
 
-model codeBlocks {
-  id            Int @id @default(autoincrement())
-  base_id       String
-  name          String
-  content       String
-  createdAt     DateTime  @default(now()) @map(name: "created_at")
-  updatedAt     DateTime  @updatedAt @map(name: "updated_at")
+model codeblocks {
+  id         Int       @id @default(autoincrement())
+  base_id    String?
+  name       String?
+  content    String?
+  language   String?
+  theme      String?
+  created_at DateTime? @db.Timestamptz(6)
+  updated_at DateTime? @db.Timestamptz(6)
+}
+
+model users {
+  id         Int       @id @default(autoincrement())
+  username   String?
+  password   String?
+  email      String?
+  created_at DateTime? @db.Timestamptz(6)
+  updated_at DateTime? @db.Timestamptz(6)
 }

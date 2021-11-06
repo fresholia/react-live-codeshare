@@ -2,7 +2,7 @@ import styles from '../../styles/code.module.scss';
 
 import { SettingsIcon, DownloadIcon, PlusIcon, ThemeIcon, AboutIcon } from '../Icons'
 
-import type { codeActionsProps } from '../../@types/CodeActions.d'
+import type { codeActionsProps } from '../../@types/CodeActionTypes.d'
 
 export default function CodeActions(e: codeActionsProps) {
     return (
@@ -26,7 +26,6 @@ export default function CodeActions(e: codeActionsProps) {
                     <AboutIcon fillColor="white" size={20} />
                 </div>
             </div>
-
         </div>
     )
 }

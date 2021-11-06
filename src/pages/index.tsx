@@ -4,6 +4,8 @@ import styles from '../styles/Home.module.scss'
 
 import React, { useEffect, useState } from 'react'
 
+import { createFile } from '../actions/CodeActions'
+
 const extensions = ['js', 'ts', 'tsx', 'lua', 'cpp', 'cs', 'go', 'dart', 'xml', 'json'];
 
 const Home: NextPage = () => {
@@ -12,6 +14,9 @@ const Home: NextPage = () => {
 
     if (inputValue == '' || inputValue.length > 20 || inputValue.length < 2)
       return false;
+
+    
+    createFile(inputValue)
   }
 
   const [ extensionName, setExtension ] = useState('')

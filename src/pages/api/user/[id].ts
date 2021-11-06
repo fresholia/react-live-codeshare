@@ -8,18 +8,16 @@ export default async function handler(req: NextApiRequest, res: NextApiResponse)
     const { id } = req.query
 
     if (id === 'undefined')
-        return res.status(200).json([])
+        return res.status(404).json([])
 
-    const codeData = await prisma.codeblocks.findMany({
+    const userData = await prisma.users.findMany({
         where: {
-            base_id: id.toString()
+            id: Number(id)
         }
     })
     
-    if (codeData.length > 0)
-        return res.status(200).json(codeData)
+    if (userData.length > 0)
+        return res.status(200).json(userData)
 
-    res.status(200).json({notFound: true})
-
-    await prisma.$disconnect()
+    res.status(404).json([])
 }

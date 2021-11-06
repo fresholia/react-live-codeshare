@@ -4,11 +4,28 @@ import type { AppProps as NextAppProps } from 'next/app'
 
 import variables from '../variables'
 
-import { navbarItems, navbarItemsProps } from '../@types/NavLayout.d'
+import { navbarItems, navbarItemsProps } from '../@types/NLayoutTypes.d'
 
 import styles from '../styles/NavLayout.module.scss'
 
+import { useEffect, useState } from 'react'
+
+import { getProfile, setProfile } from '../profile/getProfile'
+
+import type { UserType } from '../@types/UserTypes.d'
+
 export default function Navbar() {
+    const [userData, setUserData] = useState<UserType>()
+
+    /*
+    useEffect(() => {
+        const fetchUser = async () => {
+            const data = await getProfile()
+            setUserData(data)
+        }
+        fetchUser()
+    }, [])
+    */
     return (
         <div className={styles.navbar}>
             <div className={styles.logo}>
@@ -31,7 +48,14 @@ export default function Navbar() {
           
             
             <div className={styles.account}>
-                <p>Sign in</p>
+                {
+                    (userData) ?
+                        <div>
+                            {userData.username}
+                        </div>
+                        :
+                        <p>Sign In</p>
+                }
             </div>
         </div>
     )

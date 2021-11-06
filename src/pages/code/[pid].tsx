@@ -70,7 +70,7 @@ const Post: NextPage = () => {
             </Head>
             <div className={styles.wrapper}>
                 <div className={styles.codeContent + ' ' + (!isPageValid ? styles.noData : '')}>
-                    {isPageValid ? <CodeEditor baseId={id} codeContent={content} /> : <ErrorLayout />}
+                    {isPageValid ? <CodeEditor baseId={id} codeContent={content} /> : <ErrorLayout content="Page not found, click here to create a new page!" />}
                 </div>
                 <div className={styles.actions + ' ' + (!isPageValid ? styles.disabled : '')}>
                     <CodeActions onClick={clickInteractions}  />

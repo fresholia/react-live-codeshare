@@ -2,7 +2,7 @@ import styles from '../../styles/code.module.scss'
 
 import { CloseIcon } from '../Icons'
 
-import type { settingsEnum } from '../../@types/settingsWindow.d'
+import type { settingsEnum } from '../../@types/SettingsComponentTypes.d'
 
 export default function SettingsWindow(e: settingsEnum) {
     return (

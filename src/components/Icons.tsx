@@ -1,4 +1,4 @@
-import type { iconEnum } from '../@types/Icons.d'
+import type { iconEnum } from '../@types/IconsTypes.d'
 
 /*
     Icons from https://github.com/astrit/css.gg

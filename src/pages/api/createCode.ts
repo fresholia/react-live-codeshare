@@ -9,19 +9,23 @@ export default async function handler(req: NextApiRequest, res: NextApiResponse)
     if (!data || typeof data === 'undefined' || !data[0])
         return res.status(200).json([])
 
-    const id = Number(data[0])
-    const content = data[1]
+    const content = data[0]
+
+    const base_id = Math.random().toString(36).substr(2, 9)
     
-    await prisma.codeblocks.update({
-        where: {
-            id: id
-        },
+    const codeData = await prisma.codeblocks.create({
         data: {
-            content: content
+            base_id: base_id,
+            name: content,
+            content: '',
+            language: 'plaintext',
+            theme: 'material-darker'
         }
     })
+
+    console.log(codeData)
     
-    res.status(200).json([])
+    res.status(200).json(codeData)
 
     await prisma.$disconnect()
 }
