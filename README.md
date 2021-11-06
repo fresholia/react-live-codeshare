@@ -44,7 +44,7 @@ After this process, go to the command line and type `npx prisma db pull`.
 Check out our [Next.js deployment documentation](https://nextjs.org/docs/deployment) for more details.
 
 ## Thanks
-
+- [Code Mirror](https://codemirror.net/) - code editor framework
 - [Icon Set](https://github.com/astrit/css.gg) - thanks to css.gg for the iconset
 - [Prisma](https://www.prisma.io/) - thanks
 - [Vercel](http://vercel.app/) - thanks to vercel for the online viewer
