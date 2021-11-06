@@ -34,14 +34,14 @@ const Post: NextPage = () => {
     const router = useRouter()
     const { pid } = router.query
 
-    if (router.isFallback || pid === undefined || pid === 'undefined') {
-        return <LoadingLayout />
-    }
+    //if (router.isFallback || pid === undefined || pid === 'undefined') {
+    //    return <LoadingLayout />
+    //}
 
     const { data: pageData, error } = useSWR(`/api/code/${pid}`, fetcher)
     if (!pageData)
         return <LoadingLayout />
-        
+
     const pageDetails = typeof(pageData) === 'object' ? pageData[0] : {}
 
     const id = pageDetails?.id
