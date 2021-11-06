@@ -2,17 +2,17 @@ import Link from 'next/link'
 
 import type { AppProps as NextAppProps } from 'next/app'
 
-import variables from '../variables'
+import variables from '../../variables'
 
-import { navbarItems, navbarItemsProps } from '../@types/NLayoutTypes.d'
+import { navbarItems, navbarItemsProps } from '../../types/NLayoutTypes.d'
 
-import styles from '../styles/NavLayout.module.scss'
+import styles from '../../styles/Navbar.module.scss'
 
 import { useEffect, useState } from 'react'
 
-import { getProfile, setProfile } from '../profile/getProfile'
+import { getProfile, setProfile } from '../../models/profile/profile'
 
-import type { UserType } from '../@types/UserTypes.d'
+import type { UserType } from '../../types/UserTypes.d'
 
 export default function Navbar() {
     const [userData, setUserData] = useState<UserType>()

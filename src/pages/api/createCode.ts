@@ -1,5 +1,5 @@
 import { NextApiRequest, NextApiResponse } from 'next';
-import { prisma } from '../../db'
+import { prisma } from '../../models/db'
 
 export default async function handler(req: NextApiRequest, res: NextApiResponse) {
     const data = req.body

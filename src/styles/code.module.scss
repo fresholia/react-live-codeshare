@@ -84,13 +84,31 @@ div.wrapper {
                 align-items: center;
 
                 span {
-                    margin-left: 1rem;
                     font-size: 1.2rem;
                     font-weight: 600;
                 }
                 svg {
                     margin-right: 1rem;
                     margin-top: 3px;
+                }
+            }
+
+            div.inputGroup {
+                display: flex;
+                flex-direction: column;
+                margin-top: 2rem;
+
+                p {
+                    padding-bottom: 0.7rem;
+                }
+                select {
+                    border: none;
+                    outline: none;
+                    padding: 0.3rem;
+                    background: var(--navcolor);
+                    border: 1px solid #1d1d1d;
+                    color: var(--textcolor);
+                    border-radius: 15px;
                 }
             }
         }

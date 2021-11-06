@@ -1,9 +1,9 @@
 
-import styles from '../styles/error.module.scss'
+import styles from '../../styles/error.module.scss'
 
-import { ErrorIcon } from '../components/Icons'
+import { ErrorIcon } from '../Icons'
 
-import type { ELayoutProps } from '../@types/ELayoutTypes.d'
+import type { ELayoutProps } from '../../types/ELayoutTypes.d'
 
 export function ErrorLayout(e: ELayoutProps) {
     return (

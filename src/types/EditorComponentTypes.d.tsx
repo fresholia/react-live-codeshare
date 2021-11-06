@@ -1,5 +1,6 @@
 interface EditorComponentType {
-    baseId?: number;
+    primaryId?: number;
+    baseId?: string;
     codeContent?: string;
 }
 

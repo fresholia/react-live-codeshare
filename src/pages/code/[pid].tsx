@@ -2,9 +2,9 @@ import { useRouter } from 'next/router'
 
 import type { NextPage } from 'next'
 
-import { ErrorLayout } from '../../layouts/error'
+import { ErrorLayout } from '../../components/layouts/error'
 
-import { LoadingLayout } from '../../layouts/loading'
+import { LoadingLayout } from '../../components/layouts/loading'
 
 import styles from '../../styles/code.module.scss'
 
@@ -16,11 +16,13 @@ import SettingsWindow from '../../components/editor/SettingsWindow'
 
 import Head from 'next/head'
 
-import {useState} from 'react'
+import { useState, useEffect } from 'react'
 
 import variables from '../../variables'
 
 import useSWR from 'swr'
+
+import Pusher from 'pusher-js'
 
 let pageData
 
@@ -36,23 +38,51 @@ const fetcher = async (url: string) => {
 
 const Post: NextPage = () => {
     const [ showSettings, setSettingsWindow ] = useState(true)
+    const [ codeContent, setCodeContent ] = useState({})
 
     const router = useRouter()
     const { pid } = router.query
+
+    useEffect(() => {
+        if (router.isFallback || pid === undefined || pid === 'undefined') {
+            console.log("Router is not ready.")
+        } else {
+            //Pusher.logToConsole = true;
+
+            const pusher = new Pusher('32ac5b53ba8f23aaa617', {
+                cluster: 'eu'
+            });
+
+            const channel = pusher.subscribe(`code2gether`);
+            channel.bind(`setCodeContent:${pid}`, (data: string) => {
+                setCodeContent(JSON.parse(data).join('\n'))
+
+                if (variables.debugEnabled)
+                    console.log(`[C2G] > New code content...`)
+            });
+        }
+    });
 
     //if (router.isFallback || pid === undefined || pid === 'undefined') {
     //    return <LoadingLayout />
     //}
 
     const { data: pageData, error } = useSWR(`/api/code/${pid}`, fetcher)
+
+    useEffect(() => {
+        const content = typeof pageData?.content === 'string' ? JSON.parse(pageData?.content) : []
+        if (content)
+            setCodeContent(content.join('\n'))
+    }, [pageData])
+
     if (!pageData)
         return <LoadingLayout />
 
-    const pageDetails = typeof(pageData) === 'object' ? pageData[0] : {}
+    let pageDetails = typeof(pageData) === 'object' ? pageData : {}
 
     const id = pageDetails?.id
+    const baseId = pageDetails?.base_id
     const name = pageDetails?.name
-    const content = pageDetails?.content
 
     const isPageValid = typeof(pageData) === 'object' && id
 
@@ -63,6 +93,10 @@ const Post: NextPage = () => {
         about: () => alert('soon')
     }
     
+    const changeLanguageHighlight = (content: string) => {
+        alert(content)
+    }
+
     return (
         <>
             <Head>
@@ -70,11 +104,16 @@ const Post: NextPage = () => {
             </Head>
             <div className={styles.wrapper}>
                 <div className={styles.codeContent + ' ' + (!isPageValid ? styles.noData : '')}>
-                    {isPageValid ? <CodeEditor baseId={id} codeContent={content} /> : <ErrorLayout content="Page not found, click here to create a new page!" />}
+                    {isPageValid ? <CodeEditor primaryId={id} baseId={baseId} codeContent={codeContent.toString()} /> : <ErrorLayout content="Page not found, click here to create a new page!" />}
                 </div>
                 <div className={styles.actions + ' ' + (!isPageValid ? styles.disabled : '')}>
                     <CodeActions onClick={clickInteractions}  />
-                    { showSettings ? <SettingsWindow onClose={closeSettingsWindow} /> : '' }
+                    { showSettings ? 
+                    
+                    <SettingsWindow
+                        onClose={closeSettingsWindow}
+                        onChangeLanguage={changeLanguageHighlight}
+                        /> : '' }
                 </div>
             </div>
         </>

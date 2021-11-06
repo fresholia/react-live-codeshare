@@ -12,9 +12,9 @@ const CodeMirror = dynamic(() => {
 
 import styles from '../../styles/code.module.scss'
 
-import type { EditorComponentType } from '../../@types/EditorComponentTypes.d'
+import type { EditorComponentType } from '../../types/EditorComponentTypes.d'
 
-import { saveFile, saveFileRemote } from '../../actions/CodeActions'
+import { saveFile, saveFileRemote } from '../../models/codeview/codeview'
 
 import { useEffect } from 'react'
 
@@ -34,7 +34,7 @@ export default function EditorSection(e: EditorComponentType) {
                 }
             }
             onChange = {(value) => {
-                saveFile(e.baseId, value)
+                saveFile(e.primaryId, e.baseId, value)
                 
             }}
       />

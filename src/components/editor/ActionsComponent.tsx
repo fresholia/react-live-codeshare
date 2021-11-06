@@ -2,7 +2,7 @@ import styles from '../../styles/code.module.scss';
 
 import { SettingsIcon, DownloadIcon, PlusIcon, ThemeIcon, AboutIcon } from '../Icons'
 
-import type { codeActionsProps } from '../../@types/CodeActionTypes.d'
+import type { codeActionsProps } from '../../types/CodeActionTypes.d'
 
 export default function CodeActions(e: codeActionsProps) {
     return (

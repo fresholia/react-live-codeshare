@@ -4,7 +4,7 @@ import styles from '../styles/Home.module.scss'
 
 import React, { useEffect, useState } from 'react'
 
-import { createFile } from '../actions/CodeActions'
+import { createFile } from '../models/codeview/codeview'
 
 const extensions = ['js', 'ts', 'tsx', 'lua', 'cpp', 'cs', 'go', 'dart', 'xml', 'json'];
 

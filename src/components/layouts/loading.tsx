@@ -1,7 +1,7 @@
 
-import styles from '../styles/loading.module.scss'
+import styles from '../../styles/loading.module.scss'
 
-import { LoadingIcon } from '../components/Icons'
+import { LoadingIcon } from '../Icons'
 
 export function LoadingLayout() {
     return (

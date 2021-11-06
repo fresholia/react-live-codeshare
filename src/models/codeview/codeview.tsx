@@ -2,18 +2,23 @@ import Router from 'next/router'
 
 import { useEffect } from 'react'
 
-let lastCodeId: number = 0
+import variables from '../../variables'
+
+let lastCodeId: number = 0;
 let lastCodeContent: string = '';
 
 let lastSavedContent: string = '';
+let lastBaseId: string = '';
+
 
 const saveFileRemote = async () => {
     await fetch(`/api/saveCode`, {
         method: 'POST',
-        body: JSON.stringify([lastCodeId, lastCodeContent]),
+        body: JSON.stringify([lastCodeId, lastCodeContent, lastBaseId]),
         headers: {'Content-Type': 'application/json'}
     })
-    console.log("[C2G] > Saved the file.")
+    if (variables.debugEnabled)
+        console.log("[C2G] > Saved the file.")
 }
 
 setInterval(() => {
@@ -24,9 +29,10 @@ setInterval(() => {
     saveFileRemote()
 }, 2000)
 
-const saveFile = (id?: number, content?: string) => {
-    if (id && content) {
+const saveFile = (id?: number, baseid?: string, content?: string) => {
+    if (id && content && baseid) {
         lastCodeId = id
+        lastBaseId = baseid
         lastCodeContent = content
     }
 }

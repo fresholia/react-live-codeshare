@@ -6,7 +6,7 @@ import Head from 'next/head'
 
 import type { AppProps } from 'next/app'
 
-import NavLayout from '../layouts/navbar'
+import NavLayout from '../components/layouts/navbar'
 
 export default function DefApp({ Component, pageProps }: AppProps) {
   return (
