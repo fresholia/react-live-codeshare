@@ -1,5 +1,9 @@
+interface codeCallbackProps {
+   [name: string]: Function;
+}
+
 interface codeActionsProps {
-   id?: string;
+   onClick?: codeCallbackProps;
    
 }
 

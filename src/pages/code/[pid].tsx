@@ -12,7 +12,11 @@ import CodeActions from '../../components/editor/ActionsComponent'
 
 import CodeEditor from '../../components/editor/EditorComponent'
 
+import SettingsWindow from '../../components/editor/SettingsWindow'
+
 import Head from 'next/head'
+
+import {useState} from 'react'
 
 import variables from '../../variables'
 
@@ -31,6 +35,8 @@ const fetcher = async (url: string) => {
 }
 
 const Post: NextPage = () => {
+    const [ showSettings, setSettingsWindow ] = useState(true)
+
     const router = useRouter()
     const { pid } = router.query
 
@@ -50,6 +56,13 @@ const Post: NextPage = () => {
 
     const isPageValid = typeof(pageData) === 'object' && id
 
+    const closeSettingsWindow = () => setSettingsWindow(false)
+
+    const clickInteractions = {
+        settings: () => setSettingsWindow(true),
+        about: () => alert('soon')
+    }
+    
     return (
         <>
             <Head>
@@ -60,7 +73,8 @@ const Post: NextPage = () => {
                     {isPageValid ? <CodeEditor baseId={id} codeContent={content} /> : <ErrorLayout />}
                 </div>
                 <div className={styles.actions + ' ' + (!isPageValid ? styles.disabled : '')}>
-                    <CodeActions />
+                    <CodeActions onClick={clickInteractions}  />
+                    { showSettings ? <SettingsWindow onClose={closeSettingsWindow} /> : '' }
                 </div>
             </div>
         </>

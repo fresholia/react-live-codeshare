@@ -47,8 +47,18 @@ button.btn {
   }
 }
 
-.CodeMirror {
+div.CodeMirror {
   height: 100%!important;
+}
+
+svg.svg-button {
+  opacity: .8;
+
+  transition: .1s opacity linear;
+  &:hover {
+    cursor: pointer;
+    opacity: 1;
+  }
 }
 
 @media (prefers-reduced-motion) {

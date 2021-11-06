@@ -1,5 +1,9 @@
 import type { iconEnum } from '../@types/Icons.d'
 
+/*
+    Icons from https://github.com/astrit/css.gg
+*/
+
 const SettingsIcon = (e: iconEnum) => {
     return (
         <svg fill={e.fillColor} id="more" xmlns="http://www.w3.org/2000/svg" width={e.size} height={e.size / 3} viewBox="0 0 20 6">
@@ -66,4 +70,12 @@ const LoadingIcon = (e: iconEnum) => {
     )
 }
 
-export { SettingsIcon, DownloadIcon, PlusIcon, AboutIcon, ThemeIcon, ErrorIcon, LoadingIcon }
+const CloseIcon = (e: iconEnum) => {
+    return (
+        <svg className={e.button ? 'svg-button' : ''} onClick={e.onClick?.bind(this)} fill={e.fillColor} id="close" xmlns="http://www.w3.org/2000/svg" width={e.size} height={e.size} viewBox="0 0 14.964 14.964">
+            <path id="close-2" data-name="close" d="M6.225,4.811A1,1,0,0,0,4.811,6.225L10.586,12,4.811,17.775a1,1,0,0,0,1.414,1.414L12,13.414l5.775,5.775a1,1,0,0,0,1.414-1.414L13.414,12l5.775-5.775a1,1,0,0,0-1.414-1.414L12,10.586Z" transform="translate(-4.518 -4.518)"/>
+        </svg>
+    )
+}
+
+export { SettingsIcon, DownloadIcon, PlusIcon, AboutIcon, ThemeIcon, ErrorIcon, LoadingIcon, CloseIcon }
