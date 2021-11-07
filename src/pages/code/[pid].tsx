@@ -1,31 +1,26 @@
+import { useState, useEffect } from 'react'
+
 import { useRouter } from 'next/router'
-
-import type { NextPage } from 'next'
-
-import { ErrorLayout } from '../../components/layouts/error'
-
-import { LoadingLayout } from '../../components/layouts/loading'
-
-import styles from '../../styles/code.module.scss'
-
-import CodeActions from '../../components/editor/ActionsComponent'
-
-import SettingsWindow from '../../components/editor/SettingsWindow'
 
 import Head from 'next/head'
 
-import { useState, useEffect } from 'react'
+import { ErrorLayout, LoadingLayout } from '../../components/layouts/index'
+
+import { CodeActions, SettingsWindow } from '../../components/editor/index'
+
+import styles from '../../styles/code.module.scss'
 
 import variables from '../../variables'
-
-import useSWR from 'swr'
 
 import { SocketProvider, socket } from '../../models/socket/SocketProvider'
 
 import Editor, { useMonaco } from '@monaco-editor/react'
+
 import { saveFile } from '../../models/codeview/codeview'
 
-let pageData
+import useSWR from 'swr'
+
+let pageData: any
 
 const fetcher = async (url: string) => {
     const res = await fetch(url)
@@ -37,7 +32,12 @@ const fetcher = async (url: string) => {
     return res.json()
 }
 
-const Post: NextPage = () => {
+const isServer = () => typeof window === `undefined`;
+
+const Page = () => {
+    const router = useRouter()
+    const { pid } = router.query
+
     const [ showSettings, setSettingsWindow ] = useState(true)
     const [ codeContent, setCodeContent ] = useState({})
 
@@ -49,11 +49,9 @@ const Post: NextPage = () => {
 
     const [ theme, setTheme ] = useState<string>('vs-dark')
 
-    const monaco = useMonaco()
-    const router = useRouter()
-    const { pid } = router.query
-
     const { data: pageData, error } = useSWR(`/api/code/${pid}`, fetcher)
+
+    const monaco = useMonaco()
 
     useEffect(() => {
         if (monaco)
@@ -70,7 +68,8 @@ const Post: NextPage = () => {
     }, [pageData])
 
     useEffect(() => {
-        if (pid) SocketProvider(pid.toString(), codeContent.toString(), setCodeContent)
+        if (pid)
+            SocketProvider(pid.toString(), codeContent.toString(), setCodeContent)
     }, [pid, codeContent])
 
     if (!pageData || !socket)
@@ -89,7 +88,7 @@ const Post: NextPage = () => {
         about: () => alert('soon')
     }
 
-    return (
+    return ( !isServer() &&
         <>
             <Head>
                 <title>{isPageValid ? (`${name} - ${variables.projectName}`) : `page not found - ${variables.projectName}`}</title>
@@ -104,12 +103,29 @@ const Post: NextPage = () => {
                         language = {language}
                         theme = {theme}
                         saveViewState = {false}
+                        defaultValue = "Type something..."
+                        defaultLanguage = "javascript"
                         value = {codeContent?.toString()}
-                        onChange = { (value: any) => { saveFile(id, baseId, value) }}
+                        onChange = {
+                            (value: any) => {
+                                saveFile(id, baseId, value)
+                            }
+                        }
                         options = {
                             {
                                 fontSize: fontSize,
-                                tabSize: tabSize
+                                dragAndDrop: false,
+                                codeLens: false,
+                                parameterHints: {
+                                    enabled: false
+                                },
+                                scrollBeyondLastLine: false,
+                                contextmenu: false,
+                                lineNumbers: 'on',
+                                lineNumbersMinChars: 1,
+                                lineDecorationsWidth: 0,
+                                renderLineHighlight: 'none',
+                                
                             }
                         }
                         />
@@ -136,4 +152,4 @@ const Post: NextPage = () => {
     )
 }
 
-export default Post
+export default Page
