@@ -34,11 +34,8 @@ You must create this file in order to use some libraries in the project.
 Go to the root directory of the project, create a file named `.env`.
 
 ```env
-PUSHER_APP_ID = ""
-PUSHER_KEY = ""
-PUSHER_SECRET = ""
-PUSHER_CLUSTER = ""
-
+NEXT_PUBLIC_SUPABASE_URL=""
+NEXT_PUBLIC_SUPABASE_ANON_KEY=""
 ```
 
 ## Integrate Prisma & PostgreSQL
@@ -57,8 +54,13 @@ After this process, go to the command line and type `npx prisma db pull`.
 
 Check out our [Next.js deployment documentation](https://nextjs.org/docs/deployment) for more details.
 
+## Screenshots
+![Screenshot](https://user-images.githubusercontent.com/46111016/140659987-33336f7a-d249-4c08-bde3-4040f22e3c97.png)
+
+
+
 ## Thanks
 - [Code Mirror](https://codemirror.net/) - code editor framework
 - [Icon Set](https://github.com/astrit/css.gg) - thanks to css.gg for the iconset
-- [Prisma](https://www.prisma.io/) - thanks
+- [Supabase](https://supabase.io/) - thanks
 - [Vercel](http://vercel.app/) - thanks to vercel for the online viewer
