@@ -16,7 +16,6 @@ const setCachedCodeContent = (base_id: string, content: ContentProps) => {
 
 const setCachedCodeContentData = (base_id: string, value: string) => {
     if (getCachedCodeContent(base_id)) {
-        console.log(cachedCodeContents[base_id].content)
         cachedCodeContents[base_id].content = value
     }
     return true

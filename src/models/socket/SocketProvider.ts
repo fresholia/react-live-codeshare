@@ -1,6 +1,8 @@
 
 import SocketIO, { Socket } from 'socket.io-client'
 
+import variables from '../../variables'
+
 let socket: Socket
 let codeContentFromSocket: string
 let codeContentFromEditor: any
@@ -25,9 +27,13 @@ const SocketProvider = (pageNumber: string, codeContent: string, setContent: Fun
 
             codeContentFromSocket = JSON.parse(content)
 
-            for (let i = 0; i < codeContentFromSocket.length; i++) {
-                const fromSocketRow = codeContentFromSocket[i]
-                const fromEditorRow = codeContentFromEditor[i]
+            if (typeof codeContentFromEditor === 'undefined') {
+                codeContentFromEditor = []
+            }
+
+            for (let i = 0; i < Math.min(codeContentFromSocket.length, variables.maxLengthPerPage); i++) {
+                const fromSocketRow = codeContentFromSocket.indexOf(i.toString())
+                const fromEditorRow = codeContentFromEditor.indexOf(i)
                 if (fromSocketRow != fromEditorRow) {
                     //console.log(`C2G > Before(line:${i}): ${fromEditorRow}`, '\n', `C2G > After(line:${i}): ${fromSocketRow}`)
                     

@@ -1,29 +1,25 @@
 import { NextApiRequest, NextApiResponse } from 'next';
-import { prisma } from '../../models/db';
+import { supabase } from '../../models/db';
 
 import { setCachedCodeContentData } from '../../models/cache';
 
 export default async function handler(req: NextApiRequest, res: NextApiResponse) {
-    const data = req.body
+    const reqBody = req.body
 
-    if (!data || typeof data === 'undefined' || !data[0])
+    if (!reqBody || typeof reqBody === 'undefined' || !reqBody[0])
         return res.status(200).json([])
 
-    const id = Number(data[0])
-    const content = JSON.stringify(data[1].split("\n"))
+    const id = Number(reqBody[0])
+    const content = JSON.stringify(reqBody[1].split("\n"))
 
-    const base_id = data[2].toString()
+    const base_id = reqBody[2].toString()
 
-    setCachedCodeContentData(id.toString(), content.toString())
+    setCachedCodeContentData(base_id.toString(), content.toString())
 
-    await prisma.codeblocks.update({
-        where: {
-            id: id
-        },
-        data: {
-            content: content
-        }
-    })
+    const { data, error } = await supabase
+        .from('codeblocks')
+        .update({ content: content })
+        .eq('id', id.toString())
 
-    res.status(200).json([])
+    res.status(200).json(data)
 }

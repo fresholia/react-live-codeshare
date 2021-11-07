@@ -1,6 +1,7 @@
 const variables = {
     projectName: 'code2gether',
-    debugEnabled: false
+    debugEnabled: true,
+    maxLengthPerPage: 3000
 }
 
 export default variables

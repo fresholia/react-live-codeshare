@@ -30,7 +30,7 @@ nextApp.prepare().then(async() => {
             console.log(`client: joined ${room} room`)
         })
 
-        client.on('updateCode', (room: string, content: string) => {
+        client.on('updateCode', (room: string, content: any) => {
             io.to(room).emit('updateCode', content)
         })
     });

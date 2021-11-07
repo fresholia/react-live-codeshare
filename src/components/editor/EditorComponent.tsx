@@ -24,11 +24,12 @@ export default function EditorSection(e: EditorComponentType) {
                 {
                     theme: 'material-darker',
                     mode: 'javascript',
+                    tabSize: 4,
                     lineNumbers: true
                 }
             }
             onChange = {(value) => {
-                saveFile(e.primaryId, e.baseId, value)
+                saveFile(e.primaryId?.toString(), e.baseId, value)
             }}
       />
     )

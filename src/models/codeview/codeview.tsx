@@ -6,19 +6,25 @@ import variables from '../../variables'
 
 import { updateClients } from '../socket/SocketProvider'
 
-let lastCodeId: number = 0;
+let lastCodeId: string = '';
 let lastCodeContent: string = '';
 
 let lastSavedContent: string = '';
 let lastBaseId: string = '';
 
 const saveFileRemote = async () => {
+    const content = lastCodeContent.split('\n')
+
+    if (content.length > variables.maxLengthPerPage)
+        content.length = variables.maxLengthPerPage
+
+    updateClients(lastBaseId.toString(), JSON.stringify(content.join('\n')))
+
     await fetch(`/api/saveCode`, {
         method: 'POST',
-        body: JSON.stringify([lastCodeId, lastCodeContent, lastBaseId]),
+        body: JSON.stringify([lastCodeId, content.join('\n').toString(), lastBaseId]),
         headers: {'Content-Type': 'application/json'}
     })
-    updateClients(lastBaseId.toString(), JSON.stringify(lastCodeContent.split('\n')))
 
     if (variables.debugEnabled)
         console.log("[C2G] > Saved the file.")
@@ -30,13 +36,13 @@ setInterval(() => {
 
     lastSavedContent = lastCodeContent;
     saveFileRemote()
-}, 2000)
+}, 1000)
 
-const saveFile = (id?: number, baseid?: string, content?: string) => {
-    if (id && content && baseid) {
+const saveFile = (id: string, baseid: string, content: string) => {
+    if (id && baseid) {
         lastCodeId = id
         lastBaseId = baseid
-        lastCodeContent = content
+        lastCodeContent = content || ''
     }
 }
 
