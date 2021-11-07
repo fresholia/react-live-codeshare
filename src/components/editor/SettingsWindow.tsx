@@ -5,28 +5,32 @@ import { CloseIcon } from '../Icons'
 import type { settingsEnum } from '../../types/SettingsComponentTypes.d'
 
 export default function SettingsWindow(e: settingsEnum) {
+    const supportedLangs = e.props.supportedLangs
+
     return (
         <>
             <div className={styles.window}>
                 <div className={styles.header}>
                     <span>Settings</span>
-                    <CloseIcon fillColor="white" size={16} button={true} onClick={e.onClose?.bind('')} />
+                    <CloseIcon fillColor="white" size={16} button={true} onClick={ () => { e.onClose(false) }} />
                 </div>
                 <div className={styles.inputGroup}>
                     <p>Language:</p>
-                    <select onChange={ event => { e.onChangeLanguage?.bind(event.target.value) } }>
-                        <option value="c">C</option>
-                        <option value="cpp">C++</option>
-                        <option value="csharp">C#</option>
-                        <option value="python">Python</option>
-                        <option value="php">PHP</option>
-                        <option value="java">Java</option>
-                        <option value="javascript">JavaScript</option>
-                        <option value="go">Go</option>
-                        <option value="lua">Lua</option>
-                        <option value="html">HTML</option>
-                        <option value="css">CSS</option>
-                        <option value="scss">SCSS</option>
+                    <select onChange={ event => { e.onChangeLanguage(event.target.value) } }>
+                        {
+                            supportedLangs && 
+                                supportedLangs.map((value: any) => {
+                                    return <option key={value.id} value={value.id}>{value.aliases[0]}</option>
+                                })
+                        }
+                        
+                    </select>
+                </div>
+                <div className={styles.inputGroup}>
+                    <p>Theme:</p>
+                    <select onChange={ event => e.onChangeTheme(event.target.value) }>
+                        <option value="vs-dark">Dark</option>
+                        <option value="light">Light</option>
                     </select>
                 </div>
             </div>
