@@ -4,7 +4,7 @@ import 'codemirror/lib/codemirror.css'
 import 'codemirror/theme/material-darker.css'
 
 const CodeMirror = dynamic(() => {
-    import('codemirror/mode/javascript/javascript')
+    //import('codemirror/mode/javascript/javascript')
 
     return import('react-codemirror')
 }, { ssr: false })
