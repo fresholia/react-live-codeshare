@@ -4,12 +4,13 @@ import { useEffect } from 'react'
 
 import variables from '../../variables'
 
+import { updateClients } from '../socket/SocketProvider'
+
 let lastCodeId: number = 0;
 let lastCodeContent: string = '';
 
 let lastSavedContent: string = '';
 let lastBaseId: string = '';
-
 
 const saveFileRemote = async () => {
     await fetch(`/api/saveCode`, {
@@ -17,6 +18,8 @@ const saveFileRemote = async () => {
         body: JSON.stringify([lastCodeId, lastCodeContent, lastBaseId]),
         headers: {'Content-Type': 'application/json'}
     })
+    updateClients(lastBaseId.toString(), JSON.stringify(lastCodeContent.split('\n')))
+
     if (variables.debugEnabled)
         console.log("[C2G] > Saved the file.")
 }

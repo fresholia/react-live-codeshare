@@ -5,7 +5,6 @@ import 'codemirror/theme/material-darker.css'
 
 const CodeMirror = dynamic(() => {
     import('codemirror/mode/javascript/javascript')
-    import('codemirror/mode/lua/lua')
 
     return import('react-codemirror')
 }, { ssr: false })
@@ -14,18 +13,13 @@ import styles from '../../styles/code.module.scss'
 
 import type { EditorComponentType } from '../../types/EditorComponentTypes.d'
 
-import { saveFile, saveFileRemote } from '../../models/codeview/codeview'
-
-import { useEffect } from 'react'
+import { saveFile } from '../../models/codeview/codeview'
 
 export default function EditorSection(e: EditorComponentType) {
-    /*useEffect(() => {
-        window.onbeforeunload = () => saveFileRemote()
-    }, [])*/
     return (CodeMirror &&
         <CodeMirror
             className = {styles.mirror}
-            value = {e.codeContent}
+            value = {e.codeContent?.toString()}
             options = {
                 {
                     theme: 'material-darker',
@@ -35,7 +29,6 @@ export default function EditorSection(e: EditorComponentType) {
             }
             onChange = {(value) => {
                 saveFile(e.primaryId, e.baseId, value)
-                
             }}
       />
     )

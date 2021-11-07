@@ -22,7 +22,7 @@ import variables from '../../variables'
 
 import useSWR from 'swr'
 
-import Pusher from 'pusher-js'
+import { SocketProvider, socket } from '../../models/socket/SocketProvider'
 
 let pageData
 
@@ -43,30 +43,6 @@ const Post: NextPage = () => {
     const router = useRouter()
     const { pid } = router.query
 
-    useEffect(() => {
-        if (router.isFallback || pid === undefined || pid === 'undefined') {
-            console.log("Router is not ready.")
-        } else {
-            //Pusher.logToConsole = true;
-
-            const pusher = new Pusher('32ac5b53ba8f23aaa617', {
-                cluster: 'eu'
-            });
-
-            const channel = pusher.subscribe(`code2gether`);
-            channel.bind(`setCodeContent:${pid}`, (data: string) => {
-                setCodeContent(JSON.parse(data).join('\n'))
-
-                if (variables.debugEnabled)
-                    console.log(`[C2G] > New code content...`)
-            });
-        }
-    });
-
-    //if (router.isFallback || pid === undefined || pid === 'undefined') {
-    //    return <LoadingLayout />
-    //}
-
     const { data: pageData, error } = useSWR(`/api/code/${pid}`, fetcher)
 
     useEffect(() => {
@@ -75,7 +51,11 @@ const Post: NextPage = () => {
             setCodeContent(content.join('\n'))
     }, [pageData])
 
-    if (!pageData)
+    useEffect(() => {
+        if (pid) SocketProvider(pid.toString(), codeContent.toString(), setCodeContent)
+    }, [pid, codeContent])
+
+    if (!pageData || !socket)
         return <LoadingLayout />
 
     let pageDetails = typeof(pageData) === 'object' ? pageData : {}

@@ -3,10 +3,6 @@ import { prisma } from '../../models/db';
 
 import { setCachedCodeContentData } from '../../models/cache';
 
-import { pusher } from '../../models/pusher'
-
-import { CachedCodeContentTypes, ContentProps } from '../../types/CachedCodeContentTypes.d';
-
 export default async function handler(req: NextApiRequest, res: NextApiResponse) {
     const data = req.body
 
@@ -19,7 +15,7 @@ export default async function handler(req: NextApiRequest, res: NextApiResponse)
     const base_id = data[2].toString()
 
     setCachedCodeContentData(id.toString(), content.toString())
-    
+
     await prisma.codeblocks.update({
         where: {
             id: id
@@ -28,8 +24,6 @@ export default async function handler(req: NextApiRequest, res: NextApiResponse)
             content: content
         }
     })
-
-    pusher.trigger(`code2gether`, `setCodeContent:${base_id}`, JSON.stringify(content));
 
     res.status(200).json([])
 }

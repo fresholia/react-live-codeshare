@@ -1,6 +1,6 @@
 const variables = {
     projectName: 'code2gether',
-    debugEnabled: true
+    debugEnabled: false
 }
 
 export default variables
