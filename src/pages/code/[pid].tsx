@@ -122,8 +122,6 @@ const Page = () => {
                                 scrollBeyondLastLine: false,
                                 contextmenu: false,
                                 lineNumbers: 'on',
-                                lineNumbersMinChars: 1,
-                                lineDecorationsWidth: 0,
                                 renderLineHighlight: 'none',
                                 
                             }
