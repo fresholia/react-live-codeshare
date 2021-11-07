@@ -12,7 +12,7 @@ import styles from '../../styles/code.module.scss'
 
 import variables from '../../variables'
 
-import { SocketProvider, socket } from '../../models/socket/SocketProvider'
+import { SocketProvider, socket, updateLangData } from '../../models/socket/SocketProvider'
 
 import Editor, { useMonaco } from '@monaco-editor/react'
 
@@ -72,6 +72,11 @@ const Page = () => {
             SocketProvider(pid.toString(), codeContent.toString(), setCodeContent)
     }, [pid, codeContent])
 
+    useEffect(() => {
+        if (pid)
+            updateLangData(pid.toString(), language)
+    }, [language])
+
     if (!pageData || !socket)
         return <LoadingLayout />
 
@@ -123,7 +128,7 @@ const Page = () => {
                                 contextmenu: false,
                                 lineNumbers: 'on',
                                 renderLineHighlight: 'none',
-                                
+                                tabSize: tabSize
                             }
                         }
                         />

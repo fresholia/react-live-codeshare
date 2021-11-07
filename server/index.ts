@@ -33,6 +33,10 @@ nextApp.prepare().then(async() => {
         client.on('updateCode', (room: string, content: any) => {
             io.to(room).emit('updateCode', content)
         })
+
+        client.on('setlang', (room: string, lang: string) => {
+            io.to(room).emit('updatelang', lang)
+        })
     });
 
     app.all('*', (req: any, res: any) => nextHandler(req, res));

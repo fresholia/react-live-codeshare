@@ -12,14 +12,7 @@ let lastCodeContent: string = '';
 let lastSavedContent: string = '';
 let lastBaseId: string = '';
 
-const saveFileRemote = async () => {
-    const content = lastCodeContent.split('\n')
-
-    if (content.length > variables.maxLengthPerPage)
-        content.length = variables.maxLengthPerPage
-
-    updateClients(lastBaseId.toString(), JSON.stringify(content.join('\n')))
-
+const saveFileRemote = async (content: any) => {
     await fetch(`/api/saveCode`, {
         method: 'POST',
         body: JSON.stringify([lastCodeId, content.join('\n').toString(), lastBaseId]),
@@ -35,7 +28,13 @@ setInterval(() => {
         return false;
 
     lastSavedContent = lastCodeContent;
-    saveFileRemote()
+    const content = lastCodeContent.split('\n')
+
+    if (content.length > variables.maxLengthPerPage)
+        content.length = variables.maxLengthPerPage
+
+    updateClients(lastBaseId.toString(), JSON.stringify(content.join('\n')))
+    saveFileRemote(content)
 }, 1000)
 
 const saveFile = (id: string, baseid: string, content: string) => {

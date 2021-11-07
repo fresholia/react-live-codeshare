@@ -7,9 +7,15 @@ let socket: Socket
 let codeContentFromSocket: string
 let codeContentFromEditor: any
 
-const updateClients = async (room: string, content: string) => {
+const updateClients = (room: string, content: string) => {
     if (socket) {
         socket.emit('updateCode', room, content)
+    }
+}
+
+const updateLangData = (room: string, content: string) => {
+    if (socket) {
+        socket.emit('setlang', room, content)
     }
 }
 
@@ -20,6 +26,10 @@ const SocketProvider = (pageNumber: string, codeContent: string, setContent: Fun
 
         socket.on('disconnect', () => {
             console.log('Socket disconnected.')
+        })
+
+        socket.on('updatelang', (lang: string) => {
+            console.log(`io > new lang:  ${lang}`)
         })
 
         socket.on('updateCode', (content) => {
@@ -52,4 +62,4 @@ const SocketProvider = (pageNumber: string, codeContent: string, setContent: Fun
     }
 }
 
-export { SocketProvider, updateClients, socket, codeContentFromSocket }
+export { SocketProvider, updateClients, updateLangData, socket, codeContentFromSocket }
