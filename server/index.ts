@@ -5,7 +5,7 @@ import * as socketio from 'socket.io';
 
 import { CodeController } from './controllers/code/CodeController'
 
-const port: number = parseInt(process.env.PORT || '3000', 10);
+const port: number = Number(process.env.PORT) || 3000;
 const dev: boolean = process.env.NODE_ENV !== 'production';
 const nextApp = next({ dev });
 const nextHandler: NextApiHandler = nextApp.getRequestHandler();
