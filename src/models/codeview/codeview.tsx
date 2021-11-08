@@ -1,48 +1,31 @@
 import Router from 'next/router'
 
-import { useEffect } from 'react'
-
 import variables from '../../variables'
 
 import { updateClients } from '../socket/SocketProvider'
 
-let lastCodeId: string = '';
-let lastCodeContent: string = '';
-
-let lastSavedContent: string = '';
-let lastBaseId: string = '';
-
-const saveFileRemote = async (content: any) => {
-    await fetch(`/api/saveCode`, {
-        method: 'POST',
-        body: JSON.stringify([lastCodeId, content.join('\n').toString(), lastBaseId]),
-        headers: {'Content-Type': 'application/json'}
-    })
-
-    if (variables.debugEnabled)
-        console.log("[C2G] > Saved the file.")
+let viewData: any = {
+    lastSavedContent: '',
+    content: ''
 }
 
 setInterval(() => {
-    if (lastCodeContent == lastSavedContent)
-        return false;
+    if (viewData.content == viewData.lastSavedContent || !viewData.id)
+        return false
 
-    lastSavedContent = lastCodeContent;
-    const content = lastCodeContent.split('\n')
+    viewData.lastSavedContent = viewData.content;
+    const content = viewData.content.split('\n')
 
     if (content.length > variables.maxLengthPerPage)
         content.length = variables.maxLengthPerPage
 
-    updateClients(lastBaseId.toString(), JSON.stringify(content.join('\n')))
-    saveFileRemote(content)
-}, 1000)
+    updateClients(viewData.baseid.toString(), content)
+}, 300) // Refresh rate 300ms
 
 const saveFile = (id: string, baseid: string, content: string) => {
-    if (id && baseid) {
-        lastCodeId = id
-        lastBaseId = baseid
-        lastCodeContent = content || ''
-    }
+    viewData.id = id
+    viewData.baseid = baseid
+    viewData.content = content
 }
 
 const createFile = async (name?: string) => {
@@ -56,4 +39,4 @@ const createFile = async (name?: string) => {
     Router.push(`/code/${data.base_id}`)
 }
 
-export { saveFile, createFile, saveFileRemote }
+export { saveFile, createFile }

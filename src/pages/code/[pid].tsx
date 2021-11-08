@@ -1,3 +1,5 @@
+"use strict";
+
 import { useState, useEffect } from 'react'
 
 import { useRouter } from 'next/router'
@@ -18,28 +20,14 @@ import Editor, { useMonaco } from '@monaco-editor/react'
 
 import { saveFile } from '../../models/codeview/codeview'
 
-import useSWR from 'swr'
-
-let pageData: any
-
-const fetcher = async (url: string) => {
-    const res = await fetch(url)
-  
-    if (!res.ok) {
-      return res.status
-    }
-  
-    return res.json()
-}
-
-const isServer = () => typeof window === `undefined`;
-
 const Page = () => {
     const router = useRouter()
     const { pid } = router.query
 
+    const [ pageData, setPageData ] = useState<any>()
+
     const [ showSettings, setSettingsWindow ] = useState(true)
-    const [ codeContent, setCodeContent ] = useState({})
+    const [ codeContent, setCodeContent ] = useState("")
 
     const [ language, setLanguage ] = useState<string>('')
     const [ fontSize, setFontSize ] = useState<number>(20)
@@ -49,8 +37,6 @@ const Page = () => {
 
     const [ theme, setTheme ] = useState<string>('vs-dark')
 
-    const { data: pageData, error } = useSWR(`/api/code/${pid}`, fetcher)
-
     const monaco = useMonaco()
 
     useEffect(() => {
@@ -59,26 +45,22 @@ const Page = () => {
     }, [monaco])
 
     useEffect(() => {
-        const content = typeof pageData?.content === 'string' ? JSON.parse(pageData?.content) : []
-        if (content)
-            setCodeContent(content.join('\n'))
-
-        setLanguage(pageData?.language)
-
-    }, [pageData])
+        if (pid)
+            SocketProvider(pid.toString(), codeContent, setCodeContent, setPageData)
+    }, [pid, codeContent])
 
     useEffect(() => {
-        if (pid)
-            SocketProvider(pid.toString(), codeContent.toString(), setCodeContent)
-    }, [pid, codeContent])
+        if (pageData?.content) {
+            setCodeContent(pageData.content.join('\n'))
+        }
+
+        setLanguage(pageData?.language)
+    }, [pageData])
 
     useEffect(() => {
         if (pid)
             updateLangData(pid.toString(), language)
     }, [language])
-
-    if (!pageData || !socket)
-        return <LoadingLayout />
 
     let pageDetails = typeof(pageData) === 'object' ? pageData : {}
 
@@ -93,7 +75,7 @@ const Page = () => {
         about: () => alert('soon')
     }
 
-    return ( !isServer() &&
+    return (
         <>
             <Head>
                 <title>{isPageValid ? (`${name} - ${variables.projectName}`) : `page not found - ${variables.projectName}`}</title>
@@ -108,9 +90,8 @@ const Page = () => {
                         language = {language}
                         theme = {theme}
                         saveViewState = {false}
-                        defaultValue = "Type something..."
                         defaultLanguage = "javascript"
-                        value = {codeContent?.toString()}
+                        value = {codeContent}
                         onChange = {
                             (value: any) => {
                                 saveFile(id, baseId, value)

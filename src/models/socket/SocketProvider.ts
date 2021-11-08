@@ -19,7 +19,7 @@ const updateLangData = (room: string, content: string) => {
     }
 }
 
-const SocketProvider = (pageNumber: string, codeContent: string, setContent: Function) => {
+const SocketProvider = (pageNumber: string, codeContent: string, setContent: Function, setPageData: Function) => {
     if (!socket) {
         socket = SocketIO()
         socket.emit('setroom', pageNumber)
@@ -29,11 +29,18 @@ const SocketProvider = (pageNumber: string, codeContent: string, setContent: Fun
         })
 
         socket.on('updatelang', (lang: string) => {
-            console.log(`io > new lang:  ${lang}`)
+
+        })
+
+        socket.on('codeDetails', (data: any) => {
+            data.content = typeof (data.content) == 'string' ? JSON.parse(data.content) : data.content
+            setPageData(data)
         })
 
         socket.on('updateCode', (content) => {
-            console.log('Socket.io > new code data')
+    
+
+            /*
 
             codeContentFromSocket = JSON.parse(content)
 
@@ -51,6 +58,7 @@ const SocketProvider = (pageNumber: string, codeContent: string, setContent: Fun
                 }
             }
             setContent(codeContentFromEditor)
+            */
         })
 
         socket.on('status', (str: string) => {
