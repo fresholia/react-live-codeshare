@@ -4,7 +4,7 @@ import type { AppProps as NextAppProps } from 'next/app'
 
 import variables from '../../variables'
 
-import { navbarItems, navbarItemsProps } from '../../types/NLayoutTypes.d'
+import { navbarItems, navbarItemsProps } from '../../types/NavLayoutTypes.d'
 
 import styles from '../../styles/Navbar.module.scss'
 

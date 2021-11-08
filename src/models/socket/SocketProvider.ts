@@ -22,6 +22,7 @@ const updateLangData = (room: string, content: string) => {
 const SocketProvider = (pageNumber: string, codeContent: string, setContent: Function, setPageData: Function) => {
     if (!socket) {
         socket = SocketIO()
+        
         socket.emit('setroom', pageNumber)
 
         socket.on('disconnect', () => {
