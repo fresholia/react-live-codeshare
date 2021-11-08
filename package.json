@@ -14,6 +14,7 @@
     "@types/socket.io": "^3.0.2",
     "@zeit/next-css": "^1.0.1",
     "css-loader": "^6.5.1",
+    "dotenv": "^10.0.0",
     "express": "^4.17.1",
     "install": "^0.13.0",
     "monaco-editor": "^0.30.0",
