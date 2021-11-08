@@ -3,7 +3,7 @@
   "private": true,
   "scripts": {
     "dev": "ts-node --project tsconfig.server.json server/index.ts",
-    "build:server": "tsc --project tsconfig.server.json",
+    "build:server": "ts-node --project tsconfig.server.json server/index.ts",
     "build:next": "next build",
     "build": "npm run build:next && npm run build:server",
     "start": "next start -p $PORT"
