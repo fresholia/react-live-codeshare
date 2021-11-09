@@ -1,4 +1,4 @@
-import styles from '../../styles/code.module.scss'
+import styles from '../../styles/CodeEditor.module.scss'
 
 import { CloseIcon } from '../Icons'
 
@@ -27,7 +27,7 @@ export default function SettingsWindow(e: settingsEnum) {
                     </select>
                 </div>
                 <div className={styles.inputGroup}>
-                    <p>Theme:</p>
+                    <p>Editor Theme:</p>
                     <select onChange={ event => e.onChangeTheme(event.target.value) }>
                         <option value="vs-dark">Dark</option>
                         <option value="light">Light</option>

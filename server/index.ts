@@ -48,7 +48,7 @@ nextApp.prepare().then(async() => {
                 rooms[room].setContent(content)
             }
 
-            io.to(room).emit('updateCode', content)
+            io.to(room).emit('updateCode', JSON.stringify(content))
         })
 
         client.on('setlang', (room: string, lang: string) => {

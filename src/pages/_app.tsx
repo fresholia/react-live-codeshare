@@ -21,8 +21,7 @@ export default function DefApp({ Component, pageProps }: AppProps) {
         <meta name="msapplication-TileColor" content="#212121" />
         <meta name="theme-color" content="#212121" />
       </Head>
-      <NavLayout />
-      
+
       <Component {...pageProps} />
     </>
   )

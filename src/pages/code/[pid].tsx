@@ -4,13 +4,11 @@ import { useState, useEffect } from 'react'
 
 import { useRouter } from 'next/router'
 
-import Head from 'next/head'
-
 import { ErrorLayout, LoadingLayout } from '../../components/layouts/index'
 
 import { CodeActions, SettingsWindow } from '../../components/editor/index'
 
-import styles from '../../styles/code.module.scss'
+import styles from '../../styles/CodeEditor.module.scss'
 
 import variables from '../../variables'
 
@@ -26,8 +24,8 @@ const Page = () => {
 
     const [ pageData, setPageData ] = useState<any>()
 
-    const [ showSettings, setSettingsWindow ] = useState(true)
-    const [ codeContent, setCodeContent ] = useState("")
+    const [ showSettings, setSettingsWindow ] = useState<boolean>(true)
+    const [ codeContent, setCodeContent ] = useState<string>("")
 
     const [ language, setLanguage ] = useState<string>('')
     const [ fontSize, setFontSize ] = useState<number>(20)
@@ -46,13 +44,12 @@ const Page = () => {
 
     useEffect(() => {
         if (pid)
-            SocketProvider(pid.toString(), codeContent, setCodeContent, setPageData)
+            SocketProvider(pid.toString(), setCodeContent, setPageData)
     }, [pid, codeContent])
 
     useEffect(() => {
-        if (pageData?.content) {
+        if (pageData?.content)
             setCodeContent(pageData.content.join('\n'))
-        }
 
         setLanguage(pageData?.language)
     }, [pageData])
@@ -70,57 +67,14 @@ const Page = () => {
 
     const isPageValid = typeof(pageData) === 'object' && id
 
-    const clickInteractions = {
-        settings: () => setSettingsWindow(true),
-        about: () => alert('soon')
-    }
-
     return (
         <>
-            <Head>
-                <title>{isPageValid ? (`${name} - ${variables.projectName}`) : `page not found - ${variables.projectName}`}</title>
-            </Head>
             <div className={styles.wrapper}>
-                <div className={styles.codeContent + ' ' + (!isPageValid ? styles.noData : '')}>
-                    {isPageValid ?
-                      <Editor
-                        width = "100%"
-                        height = "100%"
-                        loading = {<LoadingLayout/>}
-                        language = {language}
-                        theme = {theme}
-                        saveViewState = {false}
-                        defaultLanguage = "javascript"
-                        value = {codeContent}
-                        onChange = {
-                            (value: any) => {
-                                saveFile(id, baseId, value)
-                            }
-                        }
-                        options = {
-                            {
-                                fontSize: fontSize,
-                                dragAndDrop: false,
-                                codeLens: false,
-                                parameterHints: {
-                                    enabled: false
-                                },
-                                scrollBeyondLastLine: false,
-                                contextmenu: false,
-                                lineNumbers: 'on',
-                                renderLineHighlight: 'none',
-                                tabSize: tabSize
-                            }
-                        }
-                        />
-                        :
-                        <ErrorLayout content="Page not found, click here to create a new page!" />}
-                </div>
                 <div className={styles.actions + ' ' + (!isPageValid ? styles.disabled : '')}>
-                    <CodeActions onClick={clickInteractions}  />
-                    { showSettings ? 
                     
-                    <SettingsWindow
+                <CodeActions onClick={{settings: () => setSettingsWindow(true)}}  />
+                 
+                    {showSettings && <SettingsWindow
                         props={
                             {
                                 supportedLangs: supportedLangs
@@ -129,7 +83,57 @@ const Page = () => {
                         onClose = {setSettingsWindow}
                         onChangeTheme = {setTheme}
                         onChangeLanguage = {setLanguage}
-                        /> : '' }
+                        />}
+
+                    
+                </div>
+                <div className={styles.content + ' ' + (!isPageValid ? styles.noData : '')}>
+                {isPageValid ?
+                    <>
+                        <div className={styles.landing}>
+                            <h2>Welcome code2gether!</h2>
+
+                            <a href="#">
+                                Delete this page
+                            </a>
+                        </div>
+                        
+                        <div className={styles.editorSection}>
+                            
+                            <Editor
+                                width = "100%"
+                                height = "100%"
+                                loading = {<LoadingLayout title="Loading editor."/>}
+                                language = {language}
+                                theme = {theme}
+                                saveViewState = {false}
+                                defaultLanguage = "javascript"
+                                value = {codeContent}
+                                onChange = {
+                                    (value: any) => {
+                                        saveFile(id, baseId, value)
+                                    }
+                                }
+                                options = {
+                                    {
+                                        fontSize: fontSize,
+                                        dragAndDrop: false,
+                                        codeLens: false,
+                                        parameterHints: {
+                                            enabled: false
+                                        },
+                                        scrollBeyondLastLine: false,
+                                        lineNumbers: 'on',
+                                        renderLineHighlight: 'none',
+                                        tabSize: tabSize,
+                                        quickSuggestions: false
+                                    }
+                                }
+                                />
+                        </div>
+                    </>
+                :
+                <ErrorLayout content="Page not found, click here to create a new page!" />}
                 </div>
             </div>
         </>

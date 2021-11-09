@@ -1,7 +1,7 @@
 div.wrapper {
     position: relative;
     width: 100%;
-    height: calc((100vh) - var(--navHeight));
+    height: 100vh;
     
     color: var(--textcolor);
 
@@ -12,13 +12,84 @@ div.wrapper {
     grid-template: auto / calc(100% - var(--itemsize)) var(--itemsize);
     */
 
-    div.codeContent {
+    div.content {
         position: relative;
         width: 100%;
         height: 100%;
         color: var(--textcolor);
         overflow: hidden;
-        background: #212121;
+        background: var(--bgcolor);
+        padding-left: 2rem;
+        padding-right: 2rem;
+
+        padding-top: 2rem;
+        padding-bottom: 8rem;
+
+        div.tabs {
+            position: relative;
+            width: 100%;
+            height: 3rem;
+            background: #1a1a1a;
+
+            display: flex;
+            
+
+            div.tab {
+                position: relative;
+                display: flex;
+                float: left;
+                height: 100%;
+
+            }
+        }
+
+        div.landing {
+            position: relative;
+            display: flex;
+            justify-content: space-between;
+
+            align-items: center;
+            width: 100%;
+            height: 4rem;
+
+            h2 {
+                padding: 0.6rem;
+           
+                width: 260px;
+                font-size: 1.3rem;
+                text-align: center;
+                background: #0f0f0f;
+                border: 1px solid #1a1a1a;
+                color: #b6b6b6;
+                border-radius: 20px;
+                font-weight: 200;
+            }
+
+            a {
+                text-decoration: none;
+                color: #ff8c8c;
+                padding-left: 1.2rem;
+                padding-right: 1.2rem;
+                padding-top: .8rem;
+                padding-bottom: .8rem;
+                font-size: .8rem;
+                background: #c5282896;
+                border: 1px solid #c52828;
+                border-radius: 20px;
+                opacity: .8;
+                transition: .2s opacity linear;
+                &:hover {
+                    cursor: pointer;
+                    opacity: 1;
+                }
+            }
+        }
+
+        div.editorSection {
+            width: 100%;
+            height: 100%;
+            margin-top: 1rem;
+        }
 
         div.mirror {
             height: 100%;
@@ -51,8 +122,10 @@ div.wrapper {
         display: flex;
         flex-direction: row;
         background: #0e0e0e;
-        min-width: var(--itemsize);
+        min-width: calc(var(--itemsize) * 1.2);
         height: 100%;
+
+        padding: 1rem;
 
         justify-content: space-between;
 
@@ -64,17 +137,23 @@ div.wrapper {
             display: flex;
             justify-content: space-between;
             flex-direction: column;
+            align-items: center;
         }
 
         div.window {
-            width: calc(var(--navHeight) * 4);
+            width: calc(var(--navHeight) * 5);
             height: 100%;
 
-            background: var(--bgcolor);
+            background: #0e0e0e;
             box-sizing: border-box;
             padding: 1rem;
             z-index: 999;
+            margin-left: 1rem;
+            
+            border-left: 1px solid #212121;
 
+            border-top-right-radius: 10px;
+            border-bottom-right-radius: 10px;
             div.header {
                 width: 100%;
                 height: calc(var(--navHeight / 2));
@@ -117,15 +196,19 @@ div.wrapper {
 
         div.item {
             position: relative;
-            background-color: #151515;
-            border-bottom: 1px solid #212121;
+            
+            background-color: #111111;
+            border: 1px solid #1a1a1a;
 
             display: flex;
             justify-content: center;
             align-items: center;
-            width: var(--itemsize);
-            height: var(--itemsize);
+            width: calc(var(--itemsize) / 1.3);
+            height: calc(var(--itemsize) / 1.3);
 
+            border-radius: 10px;
+            margin-bottom: 30px;
+            
             cursor: pointer;
 
             transition: .2s all linear;
@@ -137,6 +220,7 @@ div.wrapper {
                 height: 100%;
                 backdrop-filter: blur(20px);
                 background-position: 0px;
+                border-radius: 10px;
                 background-image: linear-gradient(43deg, #4158D0 0%, #C850C0 46%, #FFCC70 100%);
                 opacity: 0;
                 transition: .2s all linear;
@@ -144,11 +228,25 @@ div.wrapper {
             
             svg {
                 opacity: .8;
+                transition: .2s all linear;
+            }
+
+            span {
+                position: absolute;
+                width: 100%;
+                text-align: center;
+                bottom: 0;
+                margin-bottom: -19px;
+                font-size: 0.8rem;
+                color: #3a3a3a;
             }
 
             &:hover {
+                svg {
+                    transform: scale(1.3);
+                }
                 &::before {
-                    opacity: 1;
+                    opacity: .8;
                 }
             }
         }

@@ -4,8 +4,6 @@ import SocketIO, { Socket } from 'socket.io-client'
 import variables from '../../variables'
 
 let socket: Socket
-let codeContentFromSocket: string
-let codeContentFromEditor: any
 
 const updateClients = (room: string, content: string) => {
     if (socket) {
@@ -19,7 +17,7 @@ const updateLangData = (room: string, content: string) => {
     }
 }
 
-const SocketProvider = (pageNumber: string, codeContent: string, setContent: Function, setPageData: Function) => {
+const SocketProvider = (pageNumber: string, setContent: Function, setPageData: Function) => {
     if (!socket) {
         socket = SocketIO()
         
@@ -38,9 +36,10 @@ const SocketProvider = (pageNumber: string, codeContent: string, setContent: Fun
             setPageData(data)
         })
 
-        socket.on('updateCode', (content) => {
-    
+        socket.on('updateCode', (content: string) => {
+            const data = JSON.parse(content)
 
+            
             /*
 
             codeContentFromSocket = JSON.parse(content)
@@ -66,9 +65,6 @@ const SocketProvider = (pageNumber: string, codeContent: string, setContent: Fun
             console.log(str.toString())
         })
     }
-    if (codeContent) {
-        codeContentFromEditor = codeContent.split('\n')
-    }
 }
 
-export { SocketProvider, updateClients, updateLangData, socket, codeContentFromSocket }
+export { SocketProvider, updateClients, updateLangData, socket }

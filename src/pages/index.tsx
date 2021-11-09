@@ -6,47 +6,43 @@ import React, { useEffect, useState } from 'react'
 
 import { createFile } from '../models/codeview/codeview'
 
-const extensions = ['js', 'ts', 'tsx', 'lua', 'cpp', 'cs', 'go', 'dart', 'xml', 'json'];
+import { LogoIcon, CloseIcon } from '../components/Icons'
+
+import { motion } from 'framer-motion'
+
+import { navbarItems } from '../types/NavLayoutTypes.d'
+
+import { useRouter } from 'next/router'
+
+import FooterLayout from '../components/layouts/footer'
 
 const Home: NextPage = () => {
-  const createCodePage: React.MouseEventHandler<HTMLButtonElement> = (e) => {
-    e.preventDefault()
-
-    if (inputValue == '' || inputValue.length > 20 || inputValue.length < 2)
-      return false;
-
-    
-    createFile(inputValue)
-  }
-
-  const [ extensionName, setExtension ] = useState('')
-  const [ inputValue, setInputValue ] = useState('')
-
-  useEffect(() => {
-    const interval = setInterval(() => {
-      const extension = extensions[Math.floor(Math.random() * extensions.length)]
-      setExtension(extension)
-    }, 500)
-    return () => clearInterval(interval)
-  }, [])
+  const { asPath } = useRouter()
 
   return (
     <>
-     <div className={styles.wrapper}>
-        <div className={styles.container}>
-          <div className={styles.content}>
-            <h2>New generation <span>pastebin</span> for developers.</h2>
-            <h5>Compile instantly by writing code simultaneously with your friend. Writing code is so much easier now!</h5>
-
-            <div className={styles.inputSection}>
-              <input onChange={(e) => setInputValue(e.target.value)} type="text" placeholder={`File name.${extensionName}`} />
-              <button className="btn green" onClick={createCodePage}>
-                Start Now!
-              </button>
-            </div>
+      <div className={styles.wrapper}>
+        <div className={styles.navbar}>
+          <LogoIcon fillColor="white" size={64} />
+          {
+            navbarItems.map((nav, i) => {
+              return (<a className={(asPath == nav.href ? styles.active : '')} key={nav.key}>{nav.name}</a>)
+            })
+          }
+        </div>
+        <div className={styles.land}>
+          <motion.div className={styles.headerText} initial={{ opacity: 0 }} animate={{ opacity: 1 }}>Are you <span className={styles.colorized}>ready?</span></motion.div>
+          <motion.div className={styles.bottomText} initial={{ opacity: 0 }} animate={{ opacity: 1 }}>Meet the simultaneous coding application developed with <span className={styles.bold}>better technologies</span> than you can imagine.</motion.div>
+          
+          <div className={styles.container}>
+            <button onClick={() => {}}>
+              Launch Now
+            </button>
           </div>
         </div>
-     </div>
+      </div>
+      
+      <FooterLayout />
     </>
   )
 }
