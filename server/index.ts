@@ -3,7 +3,8 @@ import * as http from 'http';
 import next, { NextApiHandler } from 'next';
 import * as socketio from 'socket.io';
 
-import { CodeController } from './controllers/code/CodeController'
+import { CodeController } from './controllers/code/codeblocks.controller'
+
 require('dotenv').config();
 const port: number = parseInt(process.env.PORT || '3000', 10);
 
@@ -11,7 +12,7 @@ const dev: boolean = process.env.NODE_ENV !== 'production';
 const nextApp = next({ dev });
 const nextHandler: NextApiHandler = nextApp.getRequestHandler();
 
-import {CodeControllerType} from './types/CodeControllerType.d'
+import {CodeControllerType} from './types/codeblocks.types'
 
 const rooms: CodeControllerType = {}
 
@@ -19,6 +20,7 @@ nextApp.prepare().then(async() => {
     const app: Express = express();
     const server: http.Server = http.createServer(app);
     const io: socketio.Server = new socketio.Server();
+
     io.attach(server);
 
     io.on('connection', (client: socketio.Socket) => {
@@ -33,26 +35,19 @@ nextApp.prepare().then(async() => {
 
             if (!rooms[room]) {
                 rooms[room] = new CodeController(room)
-                console.log(`${room} created!`)
             }
 
-            rooms[room].getContent((content: any) => {
-                client.emit('codeDetails', content)
-            }) 
-
-            console.log(`client: joined ${room} room`)
+            rooms[room].getContent((data: any) => {
+                client.emit('codeDetails', data)
+            })
         })
 
-        client.on('updateCode', (room: string, content: Array<string>) => {
+        client.on('updateCode', (room: string, content: string[]) => {
             if (rooms[room]) {
-                rooms[room].setContent(content)
+                rooms[room].setCodeContent(content)
             }
 
-            io.to(room).emit('updateCode', JSON.stringify(content))
-        })
-
-        client.on('setlang', (room: string, lang: string) => {
-            io.to(room).emit('updatelang', lang)
+            io.to(room).emit('updateCode', content)
         })
     });
 

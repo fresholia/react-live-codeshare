@@ -1,20 +1,18 @@
 import type { NextPage } from 'next'
 
-import styles from '../styles/Home.module.scss'
+import styles from '../styles/index.module.scss'
 
-import React, { useEffect, useState } from 'react'
+import { createFile } from '../models/editor/editor.model'
 
-import { createFile } from '../models/codeview/codeview'
-
-import { LogoIcon, CloseIcon } from '../components/Icons'
+import { LogoIcon } from '../components/iconset.icons'
 
 import { motion } from 'framer-motion'
 
-import { navbarItems } from '../types/NavLayoutTypes.d'
+import { navbarItems } from '../types/navbar.type'
 
 import { useRouter } from 'next/router'
 
-import FooterLayout from '../components/layouts/footer'
+import FooterLayout from '../components/layouts/footer.layout'
 
 const Home: NextPage = () => {
   const { asPath } = useRouter()
@@ -31,7 +29,7 @@ const Home: NextPage = () => {
           }
         </div>
         <div className={styles.land}>
-          <motion.div className={styles.headerText} initial={{ opacity: 0 }} animate={{ opacity: 1 }}>Are you <span className={styles.colorized}>ready?</span></motion.div>
+          <motion.div className={styles.headerText} initial={{ opacity: 0 }} animate={{ opacity: 1 }}>Are you <motion.div animate={{ backgroundPosition: ['0px 0px', '1000px 0px', '0px 0px'] }} transition={{ duration: 10, repeat: Infinity, ease: 'linear' }} className={styles.colorized}>ready?</motion.div></motion.div>
           <motion.div className={styles.bottomText} initial={{ opacity: 0 }} animate={{ opacity: 1 }}>Meet the simultaneous coding application developed with <span className={styles.bold}>better technologies</span> than you can imagine.</motion.div>
           
           <div className={styles.container}>

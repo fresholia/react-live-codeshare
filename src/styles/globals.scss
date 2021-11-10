@@ -7,6 +7,7 @@
   --navHeight: 150px;
   --itemsize: 80px;
   --maxwidth: 1000px;
+  --bigsize: 8rem;
 }
 
 * {
@@ -21,48 +22,40 @@ body {
   background-repeat: no-repeat;
 }
 
-button.btn {
-  position: relative;
-  border: none;
-  outline: none;
-  padding: 0.5rem;
-  padding-left: 1.3rem;
-  padding-right: 1.3rem;
-  border-radius: 15px;
-  font-size: 1rem;
-  background: var(--bgcolor);
-  color: var(--textgray);
-  cursor: pointer;
-  font-weight: 500;
-  transform: all .2s linear;
-  &.green {
-    background: rgba(81, 244, 88, 0.55);
-    border: 1px solid #67D255;
-    box-sizing: border-box;
-    border-radius: 15px;
-    color: white;
-
-    &:hover {
-      background: rgba(101, 255, 99, 0.55);
-      border: 1px solid #5ac448;
-    }
+@media screen and (max-width: 1200px ) {
+  :root {
+    --bigsize: 7rem;
+    --maxwidth: 1000px;
   }
 }
 
-div.CodeMirror {
-  height: 100%!important;
-}
-
-svg.svg-button {
-  opacity: .8;
-
-  transition: .1s opacity linear;
-  &:hover {
-    cursor: pointer;
-    opacity: 1;
+@media screen and (max-width: 1100px ) {
+  :root {
+    --bigsize: 6rem;
+    --maxwidth: 900px;
   }
 }
 
+@media screen and (max-width: 1050px ) {
+  :root {
+    --bigsize: 4rem;
+    --maxwidth: 700px;
+  }
+}
+
+@media screen and (max-width: 800px ) {
+  :root {
+    --bigsize: 4rem;
+    --maxwidth: 500px;
+  }
+}
+
+@media screen and (max-width: 550px ) {
+  :root {
+    --bigsize: 4rem;
+    --maxwidth: 100%;
+  }
+}
 
 @media (prefers-reduced-motion) {
   * {

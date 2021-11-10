@@ -1,71 +1,55 @@
-"use strict";
-
-import { useState, useEffect } from 'react'
+import { NextPage } from 'next';
 
 import { useRouter } from 'next/router'
+
+import Image from 'next/image'
+
+import { useState, useEffect, useReducer } from 'react'
+
+import Editor, { useMonaco } from '@monaco-editor/react'
+
+import styles from '../../styles/editor.module.scss'
 
 import { ErrorLayout, LoadingLayout } from '../../components/layouts/index'
 
 import { CodeActions, SettingsWindow } from '../../components/editor/index'
 
-import styles from '../../styles/CodeEditor.module.scss'
+import { SocketProvider, socket, updateLangData } from '../../models/socket/socket.model'
 
-import variables from '../../variables'
+import { saveFile } from '../../models/editor/editor.model'
 
-import { SocketProvider, socket, updateLangData } from '../../models/socket/SocketProvider'
+import { editorStateReducer, initialEditorState } from '../../reducers/editorStateReducer';
 
-import Editor, { useMonaco } from '@monaco-editor/react'
+import { ICodeBlocks } from '../../types/codeview.type';
 
-import { saveFile } from '../../models/codeview/codeview'
-
-const Page = () => {
+const Page: NextPage = () => {
     const router = useRouter()
+    const monaco = useMonaco()
+    const [ editorState, dispatchEditorStateAction ] = useReducer(editorStateReducer, initialEditorState)
+
+    const [ showSettings, setSettingsWindow ] = useState<boolean>(false)
+
     const { pid } = router.query
 
-    const [ pageData, setPageData ] = useState<any>()
+    const handleSetPageData = (pageData: ICodeBlocks) => {
+        dispatchEditorStateAction({type: 'SET_EDITOR_STATE', payload: pageData})
+    }
 
-    const [ showSettings, setSettingsWindow ] = useState<boolean>(true)
-    const [ codeContent, setCodeContent ] = useState<string>("")
-
-    const [ language, setLanguage ] = useState<string>('')
-    const [ fontSize, setFontSize ] = useState<number>(20)
-    const [ tabSize, setTabSize ] = useState<number>(4)
-
-    const [ supportedLangs, setSupportedLangs ] = useState<any>()
-
-    const [ theme, setTheme ] = useState<string>('vs-dark')
-
-    const monaco = useMonaco()
+    const handleChangeData = (key: keyof ICodeBlocks, value: any) => {
+        dispatchEditorStateAction({type: 'SET_EDITOR_STATE', payload: {...editorState, [key]: value}})
+    }
 
     useEffect(() => {
-        if (monaco)
-            setSupportedLangs(monaco?.languages.getLanguages())
-    }, [monaco])
+        if (pid && pid.length > 0) {
+            SocketProvider(pid.toString(), handleSetPageData)
 
-    useEffect(() => {
-        if (pid)
-            SocketProvider(pid.toString(), setCodeContent, setPageData)
-    }, [pid, codeContent])
+            if (monaco) {
+                handleChangeData('languages', monaco.languages.getLanguages())
+            }
+        }
+    }, [pid, monaco])
 
-    useEffect(() => {
-        if (pageData?.content)
-            setCodeContent(pageData.content.join('\n'))
-
-        setLanguage(pageData?.language)
-    }, [pageData])
-
-    useEffect(() => {
-        if (pid)
-            updateLangData(pid.toString(), language)
-    }, [language])
-
-    let pageDetails = typeof(pageData) === 'object' ? pageData : {}
-
-    const id = pageDetails?.id
-    const baseId = pageDetails?.base_id
-    const name = pageDetails?.name
-
-    const isPageValid = typeof(pageData) === 'object' && id
+    const isPageValid = editorState.id > 0
 
     return (
         <>
@@ -73,26 +57,29 @@ const Page = () => {
                 <div className={styles.actions + ' ' + (!isPageValid ? styles.disabled : '')}>
                     
                 <CodeActions onClick={{settings: () => setSettingsWindow(true)}}  />
-                 
-                    {showSettings && <SettingsWindow
+                    {(editorState.languages && showSettings) && 
+                    <SettingsWindow
                         props={
                             {
-                                supportedLangs: supportedLangs
+                                langs: editorState.languages,
+                                clickHandlers: {
+                                    setLanguage: (lang: string) => handleChangeData('language', lang),
+                                    setTheme: (theme: string) => handleChangeData('theme', theme),
+                                    close: () => setSettingsWindow(false)
+                                }
                             }
                         }
-                        onClose = {setSettingsWindow}
-                        onChangeTheme = {setTheme}
-                        onChangeLanguage = {setLanguage}
-                        />}
-
-                    
+                    />}
                 </div>
                 <div className={styles.content + ' ' + (!isPageValid ? styles.noData : '')}>
                 {isPageValid ?
                     <>
                         <div className={styles.landing}>
-                            <h2>Welcome code2gether!</h2>
-
+                            <div className={styles.pageHeader}>
+                                <Image alt="Language icon" src={`/iconset/${editorState.language}.svg`} width="32" height="32" />
+                                {editorState.name}
+                            </div>
+                            
                             <a href="#">
                                 Delete this page
                             </a>
@@ -103,20 +90,19 @@ const Page = () => {
                             <Editor
                                 width = "100%"
                                 height = "100%"
-                                loading = {<LoadingLayout title="Loading editor."/>}
-                                language = {language}
-                                theme = {theme}
+                                loading = {<LoadingLayout content="Loading editor."/>}
+                                language = {editorState.language}
+                                theme = {editorState.theme}
                                 saveViewState = {false}
-                                defaultLanguage = "javascript"
-                                value = {codeContent}
+                                defaultLanguage = {editorState.language}
+                                value = {editorState.content.join('\n')}
                                 onChange = {
-                                    (value: any) => {
-                                        saveFile(id, baseId, value)
+                                    (value: string | undefined) => {
+                                        saveFile(editorState.id, editorState.base_id, value)
                                     }
                                 }
                                 options = {
                                     {
-                                        fontSize: fontSize,
                                         dragAndDrop: false,
                                         codeLens: false,
                                         parameterHints: {
@@ -125,7 +111,6 @@ const Page = () => {
                                         scrollBeyondLastLine: false,
                                         lineNumbers: 'on',
                                         renderLineHighlight: 'none',
-                                        tabSize: tabSize,
                                         quickSuggestions: false
                                     }
                                 }
