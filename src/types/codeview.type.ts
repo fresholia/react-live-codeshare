@@ -3,11 +3,18 @@ export interface ICodeBlocks {
     base_id: string;
     name: string;
     content: string[];
+    changes: object;
     language: string;
     languages?: Array<object>;
     theme: string;
     created_at: string;
     updated_at: string;
+}
+
+export interface IClientActions {
+    name: string;
+    position: number[];
+    selection: number[];
 }
 
 export interface IErrorLayout {

@@ -133,4 +133,22 @@ const TwitchIcon = (e: IIconType) => {
     )
 }
 
-export { LogoIcon, SettingsIcon, DownloadIcon, PlusIcon, AboutIcon, ThemeIcon, ErrorIcon, LoadingIcon, CloseIcon, TwitterIcon, GitHubIcon, DiscordIcon, TwitchIcon }
+const PlayIcon = (e: IIconType) => {
+    return (
+        <svg fill={e.fillColor} width={e.size} height={e.size} xmlns="http://www.w3.org/2000/svg" viewBox="0 0 11 19">
+            <path d="M9,21.5,17.5,13,13,10l2-7.5L6.5,11,11,14Z" transform="translate(-6.5 -2.5)"/>
+        </svg>      
+    )
+}
+
+const TrashIcon = (e: IIconType) => {
+    return (
+        <svg fill={e.fillColor} width={e.size} height={e.size} xmlns="http://www.w3.org/2000/svg" width="18" height="19" viewBox="0 0 18 19">
+            <path d="M17,5V4a2,2,0,0,0-2-2H9A2,2,0,0,0,7,4V5H4A1,1,0,0,0,4,7H5V18a3,3,0,0,0,3,3h8a3,3,0,0,0,3-3V7h1a1,1,0,0,0,0-2ZM15,4H9V5h6Zm2,3H7V18a1,1,0,0,0,1,1h8a1,1,0,0,0,1-1Z" transform="translate(-3 -2)" fill-rule="evenodd"/>
+            <path d="M9,9h2v8H9Z" transform="translate(-3 -2)"/>
+            <path d="M13,9h2v8H13Z" transform="translate(-3 -2)"/>
+        </svg>
+    )
+}
+
+export { LogoIcon, SettingsIcon, DownloadIcon, PlusIcon, AboutIcon, ThemeIcon, ErrorIcon, LoadingIcon, CloseIcon, TwitterIcon, GitHubIcon, DiscordIcon, TwitchIcon, PlayIcon, TrashIcon }

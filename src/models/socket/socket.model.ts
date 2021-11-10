@@ -36,8 +36,6 @@ const SocketProvider = (pageNumber: string, handleSetPageData: Function) => {
         })
 
         socket.on('updateCode', (content: string[]) => {
-            console.log(content)
-
             
             /*
 
