@@ -1,4 +1,4 @@
-import styles from '../../styles/errorlayout.module.scss'
+import styles from '../../components/styles/errorlayout.module.scss'
 
 import { ErrorIcon } from '../iconset.icons'
 

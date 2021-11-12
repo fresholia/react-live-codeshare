@@ -1,6 +1,6 @@
 import type { NextPage } from 'next'
 
-import styles from '../styles/index.module.scss'
+import styles from '../components/styles/index.module.scss'
 
 import { createFile } from '../models/editor/editor.model'
 

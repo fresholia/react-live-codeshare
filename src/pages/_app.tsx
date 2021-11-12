@@ -1,6 +1,6 @@
 import { useEffect } from 'react'
 
-import '../styles/globals.scss'
+import '../components/styles/globals.scss'
 
 import Head from 'next/head'
 

@@ -1,5 +1,4 @@
-import { stat } from 'fs';
-import { ICodeBlocks, IClientActions } from '../types/codeview.type'
+import { ICodeBlocks, IClientActions, IInputActions } from '../types/codeview.type'
 
 type EditorStateReducerAction = {
     payload: ICodeBlocks;
@@ -7,9 +6,12 @@ type EditorStateReducerAction = {
 } | {
     payload: IClientActions[];
     type: 'SET_CLIENTS_ACTIONS';
+} | {
+    payload: IInputActions;
+    type: 'SET_INPUT_VALUES';
 };
 
-type IEditorState = { config: ICodeBlocks } & { clients: IClientActions[] }
+type IEditorState = { config: ICodeBlocks } & { clients: IClientActions[] } & { fields: IInputActions }
 
 const initialEditorState: IEditorState = {
     config: {
@@ -19,15 +21,20 @@ const initialEditorState: IEditorState = {
         content: [],
         changes: {},
         language: '',
-        languages: [{}],
         theme: '',
+        creator: '',
         created_at: '',
-        updated_at: ''
+        updated_at: '',
+        isAdmin: false,
+        clientId: ''
     },
     
-    clients: [
-        //{ name: 'cleopatra', position: [250, 250], selection: [0, 0, 0, 0] }
-    ]
+    clients: [],
+
+    fields: {
+        name: '',
+        joined: false
+    }
 }
 
 function editorStateReducer(state: any, action: EditorStateReducerAction) {
@@ -38,6 +45,9 @@ function editorStateReducer(state: any, action: EditorStateReducerAction) {
             break;
         case 'SET_CLIENTS_ACTIONS':
             newState = {...state, clients: action.payload}
+            break;
+        case 'SET_INPUT_VALUES':
+            newState = {...state, fields: action.payload}
             break;
         default:
             break;

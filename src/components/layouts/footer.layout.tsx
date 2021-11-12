@@ -1,6 +1,6 @@
 import type { NextPage } from 'next'
 
-import styles from '../../styles/footerlayout.module.scss'
+import styles from '../../components/styles/footerlayout.module.scss'
 
 import { LogoIcon, TwitterIcon, GitHubIcon, DiscordIcon, TwitchIcon } from '../iconset.icons'
 

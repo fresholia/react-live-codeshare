@@ -1,4 +1,5 @@
 import Router from 'next/router'
+import { IClientActions } from '../../types/codeview.type'
 
 import variables from '../../variables'
 
@@ -6,7 +7,8 @@ import { updateClients } from '../socket/socket.model'
 
 let viewData: any = {
     lastSavedContent: '',
-    content: ''
+    content: '',
+    localClientPosition: {}
 }
 
 setInterval(() => {
@@ -19,13 +21,14 @@ setInterval(() => {
     if (content.length > variables.maxLengthPerPage)
         content.length = variables.maxLengthPerPage
 
-    updateClients(viewData.baseid.toString(), content) // send type array
+    updateClients(viewData.baseid.toString(), content, viewData.localClientPosition) // send type array
 }, 300) // Refresh rate 300ms
 
-const saveFile = (id: number, baseid: string, content: string | undefined) => {
+const saveFile = (id: number, baseid: string, content: string | undefined, localClientPosition: IClientActions) => {
     viewData.id = id.toString()
     viewData.baseid = baseid
     viewData.content = content
+    viewData.localClientPosition = localClientPosition
 }
 
 const createFile = async (name?: string) => {

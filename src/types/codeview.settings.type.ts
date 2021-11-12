@@ -1,5 +1,6 @@
 export interface ISettingsType {
     props: {
+        lang: string;
         langs: Array<object>;
         clickHandlers: {[name: string]: Function};
     };

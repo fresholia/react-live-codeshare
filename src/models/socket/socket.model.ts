@@ -1,44 +1,44 @@
 
 import SocketIO, { Socket } from 'socket.io-client'
 
-import { ICodeBlocks } from '../../types/codeview.type'
+import { IClientActions, ICodeBlocks } from '../../types/codeview.type'
 
-let socket: Socket
+export let socket: Socket
 
-const updateClients = (room: string, content: string) => {
+export function updateClients(room: string, content: string, localClientPosition: IClientActions) {
     if (socket) {
-        socket.emit('updateCode', room, content)
+        socket.emit('updateCode', room, content, localClientPosition)
+        return true
+    }
+    return false
+}
+
+export function updateCodeData(room: string, data: string, value: string | number | string[]) {
+    if (socket) {
+        socket.emit('updateCodeData', room, data, value)
     }
 }
 
-const updateLangData = (room: string, content: string) => {
+export function setClientRoom(room: string, name: string) {
     if (socket) {
-        socket.emit('setlang', room, content)
+        socket.emit('setroom', room, name)
     }
 }
 
-const SocketProvider = (pageNumber: string, handleSetPageData: Function) => {
+export function SocketProvider(handleSetPageData: Function, handleSetClients: Function) {
     if (!socket) {
         socket = SocketIO()
-        
-        socket.emit('setroom', pageNumber)
 
-        socket.on('disconnect', () => {
-            console.log('Socket disconnected.')
-        })
-
-        socket.on('updatelang', (lang: string) => {
-
-        })
-
-        socket.on('codeDetails', (data: ICodeBlocks) => {
+        socket.on('codeDetails', (data: ICodeBlocks, ipaddr: string, clients: IClientActions[]) => {
             handleSetPageData(data)
+
+            if (clients) {
+                handleSetClients(clients)
+            }
         })
 
-        socket.on('updateCode', (content: string[]) => {
-            
+        socket.on('updateCode', (content: string[], clients: IClientActions[]) => {
             /*
-
             codeContentFromSocket = JSON.parse(content)
 
             if (typeof codeContentFromEditor === 'undefined') {
@@ -57,11 +57,7 @@ const SocketProvider = (pageNumber: string, handleSetPageData: Function) => {
             setContent(codeContentFromEditor)
             */
         })
-
-        socket.on('status', (str: string) => {
-            console.log(str.toString())
-        })
     }
-}
 
-export { SocketProvider, updateClients, updateLangData, socket }
+    return true
+}

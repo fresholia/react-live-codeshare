@@ -1,12 +1,15 @@
 import supabase from '../../models/db';
 
 import { getCache, setCache, setCacheBlock } from '../../models/cache/cache.model'
+import { IClientActions, ICodeBlocks } from '../../../types/codeview.type';
 
 export class CodeController {
     tableName: string = 'codeblocks'
     data: any
 
     requestedCallbacks: Array<Function> = []
+
+    clients: IClientActions[] = []
 
     constructor(room: string) {
         const cache = getCache(this.tableName, room)
@@ -37,6 +40,47 @@ export class CodeController {
         if (this.data) {
             this.data.content = content.join('\n')
             setCacheBlock(this.tableName, {index: 'base_id', value: this.data.base_id}, 'content', content, true)
+        }
+    }
+
+    updateCache(dataName: string, value: string | number | string[]): void {
+        if (this.data) {
+            this.data[dataName] = value
+            // FUTURE_PLAN: insert to database
+        }
+    }
+
+    getClients() {
+        return this.clients
+    }
+
+    addClient(id: string, name: string, ipaddr: string): void {
+        let index = this.clients.findIndex(data => data.ip == ipaddr)
+        if (index >= 0) {
+            this.clients.splice(index, 1)
+        }
+        
+        this.clients.push({
+            id: id,
+            name: name,
+            position: [0, 0],
+            selection: [0, 0],
+            ip: ipaddr
+        })
+    }
+
+    removeClient(id: string): void {
+        let index = this.clients.findIndex(data => data.id == id)
+
+        if (index >= 0) {
+            this.clients.splice(index, 1)
+        }
+    }
+
+    setClientData(id: string, value: IClientActions): void {
+        let index = this.clients.findIndex(data => data.id == id)
+        if (index >= 0) {
+            this.clients[index] = value
         }
     }
 

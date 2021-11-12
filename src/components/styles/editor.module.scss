@@ -6,6 +6,11 @@ div.wrapper {
     color: var(--textcolor);
 
     display: flex;
+
+    &.disabled {
+        pointer-events: none;
+        filter: blur(15px);
+    }
     
     /*
     display: grid;
@@ -134,12 +139,15 @@ div.wrapper {
                     top: 0;
                     z-index: 2;
 
-                    font-size: .7rem;
+                    font-size: .6rem;
                     background: #111111a6;
                     border: 1px solid #212121;
                     border-radius: 10px;
-                    padding: .5rem .5rem;
+                    padding: 0rem .5rem;
+                    height: 22px;
+                    line-height: 22px;
                     z-index: 999;
+
                     span {
                         opacity: .6;
                     }
@@ -303,6 +311,92 @@ div.wrapper {
                 }
                 &::before {
                     opacity: .8;
+                }
+            }
+        }
+    }
+}
+
+div.staticPopup {
+    position: absolute;
+    left: 0;
+    top: 0;
+    width: 100%;
+    height: 100%;
+    color: var(--textcolor);
+
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    z-index: 1;
+
+    
+    div.window {
+        position: relative;
+        min-width: 350px;
+
+        background: #0f0f0f;
+        border: 1px solid #222222;
+        border-radius: 15px;
+
+        div.header {
+            width: 100%;
+            height: 2.5rem;
+
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 1.2rem;
+            font-weight: 300;
+        }
+
+        div.content {
+            position: relative;
+            width: 100%;
+            height: 100%;
+            padding: 1.5rem 3rem;
+            div.inputGroup {
+                position: relative;
+                width: 100%;
+                height: 100%;
+
+                display: flex;
+                flex-direction: column;
+
+
+                input {
+                    margin-top: .3rem;
+                    background: #212121;
+                    border: none;
+                    border: 1px solid #353535;
+                    outline: none;
+                    padding: .4rem .5rem;
+                    color: var(--textcolor);
+                    border-radius: 10px;
+                }
+
+                button {
+                    position: relative;
+                    background: #2efa9b81;
+                    border: 1px solid #2efa9bc9;
+                    outline: none;
+                    padding: .5rem 1.3rem;
+                    border-radius: 15px;
+          
+                    width: 100%;
+          
+                    margin-top: 2rem;
+                    color: var(--textcolor);
+                    opacity: .8;
+          
+                    transition: .2s opacity linear;
+          
+                    font-weight: 600;
+                    font-size: 1rem;
+                    &:hover {
+                      opacity: 1;
+                      cursor: pointer;
+                    }
                 }
             }
         }

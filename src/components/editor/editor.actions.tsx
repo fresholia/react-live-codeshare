@@ -1,4 +1,4 @@
-import styles from '../../styles/editor.module.scss';
+import styles from '../../components/styles/editor.module.scss';
 
 import { LogoIcon, SettingsIcon, DownloadIcon, PlusIcon, ThemeIcon, AboutIcon } from '../iconset.icons'
 

@@ -5,16 +5,25 @@ export interface ICodeBlocks {
     content: string[];
     changes: object;
     language: string;
-    languages?: Array<object>;
     theme: string;
+    creator: string;
     created_at: string;
     updated_at: string;
+    clientId: string;
+    isAdmin?: boolean;
 }
 
 export interface IClientActions {
+    id: string;
     name: string;
     position: number[];
     selection: number[];
+    ip: string;
+}
+
+export interface IInputActions {
+    name: string;
+    joined: boolean;
 }
 
 export interface IErrorLayout {

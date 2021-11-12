@@ -1,5 +1,5 @@
 
-import styles from '../../styles/loadinglayout.module.scss'
+import styles from '../../components/styles/loadinglayout.module.scss'
 
 import { LoadingIcon } from '../iconset.icons'
 

@@ -1,4 +1,4 @@
-import styles from '../../styles/editor.module.scss'
+import styles from '../../components/styles/editor.module.scss'
 
 import { CloseIcon } from '../iconset.icons'
 
@@ -14,7 +14,7 @@ export default function SettingsWindow(e: ISettingsType) {
                 </div>
                 <div className={styles.inputGroup}>
                     <p>Language:</p>
-                    <select onChange={ event => e.props.clickHandlers.setLanguage(event.target.value) }>
+                    <select value={e.props.lang} onChange={ event => e.props.clickHandlers.setLanguage(event.target.value) }>
                         {
                             e.props.langs && e.props.langs.map((value: any) => {
                                 return <option key={value.id} value={value.id}>{value.aliases[0]}</option>
