@@ -33,7 +33,8 @@ const initialEditorState: IEditorState = {
 
     fields: {
         name: '',
-        joined: false
+        joined: false,
+        showSettings: false,
     }
 }
 

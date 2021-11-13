@@ -24,6 +24,7 @@ export interface IClientActions {
 export interface IInputActions {
     name: string;
     joined: boolean;
+    showSettings: boolean;
 }
 
 export interface IErrorLayout {

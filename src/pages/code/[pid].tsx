@@ -4,9 +4,9 @@ import { useRouter } from 'next/router'
 
 import Image from 'next/image'
 
-import React, { useState, useEffect, useReducer, useRef } from 'react'
+import React, { useEffect, useReducer, useRef } from 'react'
 
-import Editor, { useMonaco } from '@monaco-editor/react'
+import Editor from '@monaco-editor/react'
 import type * as monacoEditor from "monaco-editor/esm/vs/editor/editor.api"
 
 import styles from '@components/styles/editor.module.scss'
@@ -29,21 +29,26 @@ import { PlayIcon, TrashIcon } from '@components/iconset.icons';
 
 import langs from '@models/static/static.langs'
 
+type SocketStateCallbackActons = {
+    payload: ICodeBlocks;
+    type: 'SET_EDITOR_CONFIG';
+} | {
+    payload: IClientActions[];
+    type: 'SET_CLIENTS_ACTIONS';
+} | {
+    payload: string[];
+    type: 'UPDATE_EDITOR_CONTENT';
+};
+
 const Page: NextPage = () => {
     const router = useRouter()
-    const monaco = useMonaco()
+    const { pid } = router.query
 
     const editorRef = useRef<monacoEditor.editor.IStandaloneCodeEditor | null>()
-
     const [ editorState, dispatchEditorStateAction ] = useReducer(editorStateReducer, initialEditorState)
-
-    const [ showSettings, setSettingsWindow ] = useState<boolean>(false)
-
-    const { pid } = router.query
 
     const handleSetPageData = (pageData: ICodeBlocks) => {
         dispatchEditorStateAction({type: 'SET_EDITOR_CONFIG', payload: pageData})
-        console.log(editorState.config)
     }
 
     const handleSetClients = (clients: IClientActions[]) => {
@@ -51,67 +56,56 @@ const Page: NextPage = () => {
     }
 
     const handleChangeData = (key: keyof ICodeBlocks, value: any) => {
-        console.log(editorState.config)
         dispatchEditorStateAction({type: 'SET_EDITOR_CONFIG', payload: {...editorState.config, [key]: value}})
     }
 
     const handleChangeInputValues = (key: keyof IInputActions, value: any) => {
-        dispatchEditorStateAction({type: 'SET_INPUT_VALUES', payload: {...editorState.config, [key]: value}})
+        dispatchEditorStateAction({type: 'SET_INPUT_VALUES', payload: {...editorState.fields, [key]: value}})
+    }
+
+    const handleSocketCallbacks = (action: SocketStateCallbackActons) => {
+        switch (action.type) {
+            case 'SET_EDITOR_CONFIG':
+                handleSetPageData(action.payload)
+                break;
+            case 'SET_CLIENTS_ACTIONS':
+                handleSetClients(action.payload)
+                break;
+            case 'UPDATE_EDITOR_CONTENT':
+                handleChangeData('content', action.payload)
+                break;
+            default:
+                break;
+        }
     }
 
     useEffect(() => {
         if (pid && pid.length > 0) {
-            SocketProvider()
+            SocketProvider(handleSocketCallbacks)
         }
-    }, [pid])
-
-    useEffect(() => {
-        if (socket && socket.connected) {
-            socket.on('code.get', (data: ICodeBlocks, ipaddr: string, clients: IClientActions[]) => {
-                handleSetPageData(data)
-    
-                if (clients) {
-                    handleSetClients(clients)
-                }
-            })
-
-            socket.on('code.update', (content: string[], clients: IClientActions[]) => {
-                let localClientContent = editorState.config.content
-                for (let i = 0; i < content.length; i++) {
-                    let localContent = localClientContent[i]
-                    let newContent = content[i]
-                    if (localContent != newContent) {
-                        localClientContent[i] = newContent
-                    }
-                }
-                handleChangeData('content', localClientContent)
-            })
-        }
-    }, [socket])
+    }, [pid, editorState.config])
 
     return (
         <>
             <div className={`${styles.wrapper} ${!editorState.fields.joined && styles.disabled}`}>
                 <div className={styles.actions}>
-                <CodeActions onClick={{settings: () => setSettingsWindow(true)}}  />
-                    {(langs && showSettings) && 
+                <CodeActions onClick={{settings: () => { handleChangeInputValues('showSettings', true) }}}  />
+                    {(langs && editorState.fields.showSettings) && 
                     <SettingsWindow
-                        props={
-                            {
-                                lang: editorState.config.language,
-                                langs: langs,
-                                clickHandlers: {
-                                    setLanguage: (lang: string) => {
-                                        if (pid && pid.length > 0)
-                                            updateCodeData(pid.toString(), 'language', lang);
-                                        
-                                        handleChangeData('language', lang)
-                                    },
-                                    setTheme: (theme: string) => handleChangeData('theme', theme),
-                                    close: () => setSettingsWindow(false)
-                                }
+                        props={{
+                            lang: editorState.config.language,
+                            langs: langs,
+                            clickHandlers: {
+                                setLanguage: (lang: string) => {
+                                    if (pid && pid.length > 0)
+                                        updateCodeData(pid.toString(), 'language', lang);
+                                    
+                                    handleChangeData('language', lang)
+                                },
+                                setTheme: (theme: string) => handleChangeData('theme', theme),
+                                close: () => { handleChangeInputValues('showSettings', false) }
                             }
-                        }
+                        }}
                     />}
                 </div>
                 <div className={styles.content}>
@@ -142,18 +136,13 @@ const Page: NextPage = () => {
                         <div className={styles.editorSection}>
                             <div className={styles.clientActions}>
                                 {
-                                    Object.keys(editorState.clients).map((index: string) => { // ch
+                                    Object.keys(editorState.clients).map((index: string) => {
                                         const row = editorState.clients[index]
-                                        let x = row.position[1] + 25; // padding-left
+                                        let x = row.position[1] + 25;
                                         let y = (row.position[0] - 1) * 22;
 
                                         return (
-                                            <div key={index} className={styles.client} style={
-                                                {
-                                                    marginLeft: `${x}px`,
-                                                    marginTop: `${y}px`
-                                                }
-                                            }>
+                                            <div key={index} className={styles.client} style={{marginLeft: `${x}px`, marginTop: `${y}px`}}>
                                                 <span>{`${row.name} ${editorState.config.clientId == row.id ? '(you)' : ''}`}</span>
                                             </div>
                                         )
@@ -181,9 +170,9 @@ const Page: NextPage = () => {
                                         const position = editor.getPosition()
                             
                                         if (position && targetClient) {
-                                            let line = position.lineNumber // Y
                                             let column = position.column // X
-                            
+                                            let line = position.lineNumber // Y
+
                                             if (line) {
                                                 const text = editor.getModel()?.getValueInRange({ startLineNumber: line, startColumn: 1, endLineNumber: line, endColumn: column }).replace(/ /g, '.')
                             
@@ -192,8 +181,7 @@ const Page: NextPage = () => {
                                                 })
                             
                                                 const newClients = replaceInArray(editorState.clients, index, {...targetClient, position: [line, scale.width]})
-                                
-                                                dispatchEditorStateAction({type: 'SET_CLIENTS_ACTIONS', payload: newClients })
+                                                handleSetClients(newClients)
                                             }
                                         }
                                     }
