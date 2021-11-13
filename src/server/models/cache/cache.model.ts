@@ -1,8 +1,8 @@
 import supabase from '../db';
  
-let caches: any = {}
+let caches: any = {} // TODO_GITHUB: We need to put the correct type.
 
-let queuedQueries: any = {}
+let queuedQueries: any = {} // TODO_GITHUB: We need to put the correct type.
 
 const getCache = (table: string, index: string) => {
     if (caches[table] && caches[table][index]) {

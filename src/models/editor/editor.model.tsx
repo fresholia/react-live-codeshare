@@ -21,8 +21,9 @@ setInterval(() => {
     if (content.length > variables.maxLengthPerPage)
         content.length = variables.maxLengthPerPage
 
+    // TODO_GITHUB: We don't need send full content. We just need to send the changed lines.
     updateClients(viewData.baseid.toString(), content, viewData.localClientPosition) // send type array
-}, 300) // Refresh rate 300ms
+}, 300)
 
 const saveFile = (id: number, baseid: string, content: string | undefined, localClientPosition: IClientActions) => {
     viewData.id = id.toString()

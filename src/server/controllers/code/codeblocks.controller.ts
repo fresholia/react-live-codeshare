@@ -5,7 +5,7 @@ import { IClientActions, ICodeBlocks } from 'types/codeview.type';
 
 export class CodeController {
     tableName: string = 'codeblocks'
-    data: any
+    data: any // TODO_GITHUB: We need to put the correct type.
 
     requestedCallbacks: Array<Function> = []
 
