@@ -15,7 +15,7 @@ import { ErrorLayout, LoadingLayout } from '@components/layouts/index'
 
 import { CodeActions, SettingsWindow } from '@components/editor/index'
 
-import { SocketProvider, setClientRoom, updateCodeData, socket } from '@models/socket/socket.model'
+import { SocketProvider, setClientRoom, updateCodeData, socketConnected } from '@models/socket/socket.model'
 
 import { saveFile } from '@models/editor/editor.model'
 
@@ -109,7 +109,7 @@ const Page: NextPage = () => {
                     />}
                 </div>
                 <div className={styles.content}>
-                    {editorState.config.id > 0 ?
+                    {(editorState.config.id && socketConnected && navigator.onLine) > 0 ?
                     <>
                         <div className={styles.landing}>
                             <div className={styles.pageHeader}>
@@ -203,7 +203,7 @@ const Page: NextPage = () => {
                         </div>
                     </>
                     :
-                    <ErrorLayout content="Page not found, click here to create a new page!" />}
+                    <ErrorLayout content={!socketConnected ? 'Connection lost, please check your connection.' : 'Page not found.'} />}
                 </div>
             </div>
             {

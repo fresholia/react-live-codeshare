@@ -6,11 +6,12 @@ import { IClientActions, ICodeBlocks } from 'types/codeview.type'
 export let socket: Socket
 
 let socketCachedContent: string[] = []
-
 let socketCallback: Function
 
+export let socketConnected: boolean = false
+
 export function updateClients(room: string, content: string[], localClientPosition: IClientActions) {
-    if (socket) {
+    if (socket && socketConnected) {
         socket.emit('code.sync', room, content, localClientPosition)
         socketCachedContent = content
         return true
@@ -19,19 +20,19 @@ export function updateClients(room: string, content: string[], localClientPositi
 }
 
 export function updateCodeData(room: string, data: string, value: string | number | string[]) {
-    if (socket) {
+    if (socket && socketConnected) {
         socket.emit('code.updateData', room, data, value)
     }
 }
 
 export function setClientRoom(room: string, name: string) {
-    if (socket) {
+    if (socket && socketConnected) {
         socket.emit('code.setRoom', room, name)
     }
 }
 
 export function handleSocketEvents() {
-    if (socket) {
+    if (socket && socketConnected) {
         socket.on('code.get', (data: ICodeBlocks, ipaddr: string, clients: IClientActions[]) => {
             socketCallback({type: 'SET_EDITOR_CONFIG', payload: data})
 
@@ -58,6 +59,10 @@ export function SocketProvider(callback: Function) {
     socketCallback = callback
     if (!socket) {
         socket = SocketIO()
+        socketConnected = true
+
+        socket.on('disconnect', () => socketConnected = false)
+
         handleSocketEvents();
     }
    
