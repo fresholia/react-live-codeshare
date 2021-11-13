@@ -1,6 +1,6 @@
-import styles from '../../components/styles/editor.module.scss';
+import styles from '@components/styles/editor.module.scss';
 
-import { LogoIcon, SettingsIcon, DownloadIcon, PlusIcon, ThemeIcon, AboutIcon } from '../iconset.icons'
+import { LogoIcon, SettingsIcon, DownloadIcon, PlusIcon, ThemeIcon, AboutIcon } from '@components/iconset.icons'
 
 import type { ICodeActionProps } from '../../types/codeview.type'
 

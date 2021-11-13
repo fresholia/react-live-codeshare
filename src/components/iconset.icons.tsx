@@ -1,4 +1,4 @@
-import type { IIconType } from '../types/codeview.type'
+import type { IIconType } from 'types/codeview.type'
 import { motion } from 'framer-motion'
 
 const icon = {

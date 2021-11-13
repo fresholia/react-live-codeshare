@@ -1,9 +1,9 @@
 import Router from 'next/router'
-import { IClientActions } from '../../types/codeview.type'
+import { IClientActions } from 'types/codeview.type'
 
-import variables from '../../variables'
+import variables from 'variables'
 
-import { updateClients } from '../socket/socket.model'
+import { updateClients } from '@models/socket/socket.model'
 
 let viewData: any = {
     lastSavedContent: '',

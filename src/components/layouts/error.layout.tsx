@@ -1,8 +1,8 @@
-import styles from '../../components/styles/errorlayout.module.scss'
+import styles from '@components/styles/errorlayout.module.scss'
 
-import { ErrorIcon } from '../iconset.icons'
+import { ErrorIcon } from '@components/iconset.icons'
 
-import type { IErrorLayout } from '../../types/codeview.type'
+import type { IErrorLayout } from 'types/codeview.type'
 
 export function ErrorLayout(e: IErrorLayout) {
     return (

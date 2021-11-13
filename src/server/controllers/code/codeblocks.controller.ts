@@ -1,7 +1,7 @@
 import supabase from '../../models/db';
 
 import { getCache, setCache, setCacheBlock } from '../../models/cache/cache.model'
-import { IClientActions, ICodeBlocks } from '../../../types/codeview.type';
+import { IClientActions, ICodeBlocks } from 'types/codeview.type';
 
 export class CodeController {
     tableName: string = 'codeblocks'

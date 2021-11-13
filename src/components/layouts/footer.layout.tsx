@@ -1,8 +1,8 @@
 import type { NextPage } from 'next'
 
-import styles from '../../components/styles/footerlayout.module.scss'
+import styles from '@components/styles/footerlayout.module.scss'
 
-import { LogoIcon, TwitterIcon, GitHubIcon, DiscordIcon, TwitchIcon } from '../iconset.icons'
+import { LogoIcon, TwitterIcon, GitHubIcon, DiscordIcon, TwitchIcon } from '@components/iconset.icons'
 
 const Footer: NextPage = () => {
     return (

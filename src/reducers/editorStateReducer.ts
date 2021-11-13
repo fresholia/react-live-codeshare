@@ -1,4 +1,4 @@
-import { ICodeBlocks, IClientActions, IInputActions } from '../types/codeview.type'
+import { ICodeBlocks, IClientActions, IInputActions } from 'types/codeview.type'
 
 type EditorStateReducerAction = {
     payload: ICodeBlocks;

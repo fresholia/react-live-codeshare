@@ -8,7 +8,10 @@
       "@layouts/*": ["layouts/*"],
       "@pages/*": ["pages/*"],
       "@styles/*": ["styles/*"],
-      "@utilities/*": ["utilities/*"]
+      "@utilities/*": ["utilities/*"],
+      "@types/*": ["types/*"],
+      "@models/*": ["models/*"],
+      "@reducers/*": ["reducers/*"]
     }
   }
 }

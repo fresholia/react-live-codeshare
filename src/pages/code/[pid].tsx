@@ -9,25 +9,25 @@ import React, { useState, useEffect, useReducer, useRef } from 'react'
 import Editor, { useMonaco } from '@monaco-editor/react'
 import type * as monacoEditor from "monaco-editor/esm/vs/editor/editor.api"
 
-import styles from '../../components/styles/editor.module.scss'
+import styles from '@components/styles/editor.module.scss'
 
-import { ErrorLayout, LoadingLayout } from '../../components/layouts/index'
+import { ErrorLayout, LoadingLayout } from '@components/layouts/index'
 
-import { CodeActions, SettingsWindow } from '../../components/editor/index'
+import { CodeActions, SettingsWindow } from '@components/editor/index'
 
-import { setClientRoom, SocketProvider, updateCodeData } from '../../models/socket/socket.model'
+import { SocketProvider, setClientRoom, updateCodeData, socket } from '@models/socket/socket.model'
 
-import { saveFile } from '../../models/editor/editor.model'
+import { saveFile } from '@models/editor/editor.model'
 
-import { editorStateReducer, initialEditorState } from '../../reducers/editorStateReducer';
+import { editorStateReducer, initialEditorState } from '@reducers/editorStateReducer';
 
-import { ICodeBlocks, IClientActions, IInputActions } from '../../types/codeview.type';
-import { replaceInArray } from '../../components/utils/arrayUtils';
+import { ICodeBlocks, IClientActions, IInputActions } from 'types/codeview.type';
+import { replaceInArray } from '@components/utils/arrayUtils';
 
 import calculateSize from 'calculate-size'
-import { PlayIcon, TrashIcon } from '../../components/iconset.icons';
+import { PlayIcon, TrashIcon } from '@components/iconset.icons';
 
-import langs from '../../models/static/static.langs'
+import langs from '@models/static/static.langs'
 
 const Page: NextPage = () => {
     const router = useRouter()
@@ -43,6 +43,7 @@ const Page: NextPage = () => {
 
     const handleSetPageData = (pageData: ICodeBlocks) => {
         dispatchEditorStateAction({type: 'SET_EDITOR_CONFIG', payload: pageData})
+        console.log(editorState.config)
     }
 
     const handleSetClients = (clients: IClientActions[]) => {
@@ -50,6 +51,7 @@ const Page: NextPage = () => {
     }
 
     const handleChangeData = (key: keyof ICodeBlocks, value: any) => {
+        console.log(editorState.config)
         dispatchEditorStateAction({type: 'SET_EDITOR_CONFIG', payload: {...editorState.config, [key]: value}})
     }
 
@@ -59,9 +61,33 @@ const Page: NextPage = () => {
 
     useEffect(() => {
         if (pid && pid.length > 0) {
-            SocketProvider(handleSetPageData, handleSetClients)
+            SocketProvider()
         }
     }, [pid])
+
+    useEffect(() => {
+        if (socket && socket.connected) {
+            socket.on('code.get', (data: ICodeBlocks, ipaddr: string, clients: IClientActions[]) => {
+                handleSetPageData(data)
+    
+                if (clients) {
+                    handleSetClients(clients)
+                }
+            })
+
+            socket.on('code.update', (content: string[], clients: IClientActions[]) => {
+                let localClientContent = editorState.config.content
+                for (let i = 0; i < content.length; i++) {
+                    let localContent = localClientContent[i]
+                    let newContent = content[i]
+                    if (localContent != newContent) {
+                        localClientContent[i] = newContent
+                    }
+                }
+                handleChangeData('content', localClientContent)
+            })
+        }
+    }, [socket])
 
     return (
         <>

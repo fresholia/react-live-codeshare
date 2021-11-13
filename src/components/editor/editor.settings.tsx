@@ -1,8 +1,8 @@
-import styles from '../../components/styles/editor.module.scss'
+import styles from '@components/styles/editor.module.scss'
 
-import { CloseIcon } from '../iconset.icons'
+import { CloseIcon } from '@components/iconset.icons'
 
-import type { ISettingsType, ISettingsTypeValue } from '../../types/codeview.settings.type'
+import type { ISettingsType, ISettingsTypeValue } from 'types/codeview.settings.type'
 
 export default function SettingsWindow(e: ISettingsType) {
     return (

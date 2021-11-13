@@ -1,12 +1,10 @@
 import { useEffect } from 'react'
 
-import '../components/styles/globals.scss'
+import '@components/styles/globals.scss'
 
 import Head from 'next/head'
 
 import type { AppProps } from 'next/app'
-
-import NavLayout from '../components/layouts/navbar'
 
 export default function DefApp({ Component, pageProps }: AppProps) {
   return (

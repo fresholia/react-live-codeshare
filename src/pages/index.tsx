@@ -1,18 +1,18 @@
 import type { NextPage } from 'next'
 
-import styles from '../components/styles/index.module.scss'
+import styles from '@components/styles/index.module.scss'
 
-import { createFile } from '../models/editor/editor.model'
+import { createFile } from '@models/editor/editor.model'
 
-import { LogoIcon } from '../components/iconset.icons'
+import { LogoIcon } from '@components/iconset.icons'
 
 import { motion } from 'framer-motion'
 
-import { navbarItems } from '../types/navbar.type'
+import { navbarItems } from 'types/navbar.type'
 
 import { useRouter } from 'next/router'
 
-import FooterLayout from '../components/layouts/footer.layout'
+import FooterLayout from '@components/layouts/footer.layout'
 
 const Home: NextPage = () => {
   const { asPath } = useRouter()

@@ -1,9 +1,9 @@
 
-import styles from '../../components/styles/loadinglayout.module.scss'
+import styles from '@components/styles/loadinglayout.module.scss'
 
-import { LoadingIcon } from '../iconset.icons'
+import { LoadingIcon } from '@components/iconset.icons'
 
-import { IErrorLayout } from '../../types/codeview.type'
+import { IErrorLayout } from 'types/codeview.type'
 
 export function LoadingLayout(e: IErrorLayout) {
     return (

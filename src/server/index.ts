@@ -34,7 +34,7 @@ nextApp.prepare().then(async() => {
             }
         })
         
-        client.on('setroom', (room: string, name: string) => {
+        client.on('code.setRoom', (room: string, name: string) => {
             client.join(room);
             client.handshake.auth.room = room
 
@@ -48,20 +48,20 @@ nextApp.prepare().then(async() => {
 
                 data.clientId = client.id
 
-                client.emit('codeDetails', data, ipaddr, rooms[room].getClients())
+                client.emit('code.get', data, ipaddr, rooms[room].getClients())
             })
         })
 
-        client.on('updateCode', (room: string, content: string[], codePosition: ICodeBlocks) => {
+        client.on('code.sync', (room: string, content: string[], codePosition: ICodeBlocks) => {
             if (rooms[room]) {
                 rooms[room].setCodeContent(content)
                 rooms[room].setClientData(client.id, codePosition)
             }
 
-            io.to(room).emit('updateCode', content, rooms[room].getClients())
+            io.to(room).emit('code.update', content, rooms[room].getClients())
         })
 
-        client.on('updateCodeData', (room: string, data: string, value: string | number | string[]) => {
+        client.on('code.updateData', (room: string, data: string, value: string | number | string[]) => {
             if (rooms[room]) {
                 rooms[room].updateCache(data, value)
             }
