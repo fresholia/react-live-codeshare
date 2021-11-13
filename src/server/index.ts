@@ -71,11 +71,7 @@ nextApp.prepare().then(async() => {
     app.all('*', (req: any, res: any) => nextHandler(req, res));
 
     // TODO_GITHUB: IPv6 connections broken another ways, need to fix here
-    server.listen({
-        host: 'localhost',
-        port: port,
-        exclusive: true,
-    }, () => {
-        console.log(`> Ready on `, server.address());
-    })
+    server.listen(port);
+
+    return true
 });
