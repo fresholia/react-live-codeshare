@@ -1,0 +1,62 @@
+div.land {
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  width: 100%;
+  max-width: var(--maxwidth);
+  gap: 1.5rem;
+  
+  .headerText {
+    font-size: var(--bigsize);
+    font-weight: 700;
+    display: flex;
+    float: left;
+
+    .colorized {
+      position: relative;
+      background-image: linear-gradient(to left, #b465da 0%, #cf6cc9 33%, #ee609c 66%, #b465da 100%);
+      background-clip: text;
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+    }
+  }
+
+  .bottomText {
+    font-weight: 200;
+    font-size: 1.3rem;
+
+    span.bold {
+      font-weight: bold;
+    }
+  }
+
+  div.container {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+
+    button {
+      position: relative;
+      background: #2efa9b81;
+      border: 1px solid #2efa9bc9;
+      outline: none;
+      padding: 1rem 1.5rem;
+      border-radius: 15px;
+
+      width: max-content;
+
+      color: var(--textcolor);
+      opacity: .8;
+
+      transition: .2s opacity linear;
+
+      font-weight: 600;
+      font-size: 1rem;
+      &:hover {
+        opacity: 1;
+        cursor: pointer;
+      }
+    }
+  }
+
+}
