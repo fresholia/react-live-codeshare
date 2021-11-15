@@ -1,4 +1,4 @@
-import supabase from '../db';
+import supabase from './database';
  
 let caches: any = {} // TODO_GITHUB: We need to put the correct type.
 
