@@ -1,7 +1,5 @@
 ## Getting Started
 
-- [Preview](https://code2gether-web-react.vercel.app/) - Shows the output on the master branch. (without database)
-
 First, run the development server:
 
 ```bash
@@ -12,11 +10,7 @@ yarn dev
 
 Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
 
-You can start editing the page by modifying `src/pages/index.tsx`. The page auto-updates as you edit the file.
-
-[API routes](https://nextjs.org/docs/api-routes/introduction) can be accessed on [http://localhost:3000/api/code/{id}](http://localhost:3000/api/hello). This endpoint can be edited in `src/pages/code/[id].ts`.
-
-The `src/pages/api` directory is mapped to `/api/*`. Files in this directory are treated as [API routes](https://nextjs.org/docs/api-routes/introduction) instead of React pages.
+You can start editing the page by modifying `src/screens/home/index.tsx`. The page auto-updates as you edit the file.
 
 ## Learn More
 
@@ -29,7 +23,7 @@ You can check out [the Next.js GitHub repository](https://github.com/vercel/next
 
 ## Environments Variables
 
-You must create this file in order to use some libraries in the project.
+You must create this file in order to use some libraries in the project. In this project, we use [Supabase](https://supabase.io/) to handle the database work.
 
 Go to the root directory of the project, create a file named `.env`.
 
@@ -38,29 +32,15 @@ NEXT_PUBLIC_SUPABASE_URL=""
 NEXT_PUBLIC_SUPABASE_ANON_KEY=""
 ```
 
-## Integrate Prisma & PostgreSQL
+## Integrate PostgreSQL
 
-This application needs a PostgreSQL server for data storage. We handle this easily with Prisma, all you have to do is create a PostgreSQL server.
-
-Go to the `./prisma/` folder in the root directory and create a file named `.env`.
-
-```env
-DATABASE_URL = "postgresql://USER:PASSWORD@HOST:PORT/DATABASE"
+After installing the whole project and setting the environments values, you can create the automatic schema by typing the following command on the command line.
+```
+npm run setupdb
 ```
 
-After this process, go to the command line and type `npx prisma db pull`.
-
-## Deploy on Vercel
-
-Check out our [Next.js deployment documentation](https://nextjs.org/docs/deployment) for more details.
-
-## Screenshots
-![Screenshot](https://user-images.githubusercontent.com/46111016/140659987-33336f7a-d249-4c08-bde3-4040f22e3c97.png)
-
-
-
 ## Thanks
-- [Code Mirror](https://codemirror.net/) - code editor framework
+- [Monaco Editor](https://github.com/microsoft/monaco-editor) - code editor framework
 - [Icon Set](https://github.com/astrit/css.gg) - thanks to css.gg for the iconset
-- [Supabase](https://supabase.io/) - thanks
-- [Vercel](http://vercel.app/) - thanks to vercel for the online viewer
+- [Supabase](https://supabase.io/) - database
+- [Vercel](http://vercel.app/) - Next.js & clientside deployment
