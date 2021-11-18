@@ -6,6 +6,8 @@ import Layout from 'components/layout'
 
 import styles from './_home.module.scss'
 
+import Link from 'next/link'
+
 export default function Home() {
     return (
       <div className={styles.land}>
@@ -13,9 +15,11 @@ export default function Home() {
           <motion.div className={styles.bottomText} initial={{ opacity: 0 }} animate={{ opacity: 1 }}>Meet the simultaneous coding application developed with <span className={styles.bold}>better technologies</span> than you can imagine.</motion.div>
           
           <div className={styles.container}>
-            <button onClick={() => {}}>
-              Launch Now
-            </button>
+            <Link href="/code/qWxCr">
+              <button>
+                Launch Now
+              </button>
+            </Link>
           </div>
       </div>
     )

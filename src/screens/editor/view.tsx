@@ -111,7 +111,7 @@ export default function CodeEditor() {
                     <>
                         <div className={styles.landing}>
                             <div className={styles.pageHeader}>
-                                <Image alt="Language icon" src={`/iconset/${editorState.config.language}.svg`} width="32" height="32" />
+                                <img alt="Language icon" src={`https://raw.githubusercontent.com/jesseweed/seti-ui/bc194faed12b10692807f47b97f0ff963e4c9f24/icons/${editorState.config.language}.svg`} width="32" height="32" />
                                 {editorState.config.name}
                             </div>
                             

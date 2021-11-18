@@ -3,9 +3,9 @@
   "scripts": {
     "dev": "ts-node --project tsconfig.server.json server/index.ts",
     "build:server": "ts-node --project tsconfig.server.json server/index.ts",
-    "build:next": "next build",
-    "build": "npm run build:next && npm run build:server",
-    "start": "next start -p $PORT"
+    "build:next": "next build && next export",
+    "build": "npm run build:next",
+    "start": "npm run dev && next start -p $PORT"
   },
   "dependencies": {
     "@monaco-editor/react": "^4.3.1",

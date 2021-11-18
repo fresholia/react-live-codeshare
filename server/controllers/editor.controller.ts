@@ -58,7 +58,7 @@ export class CodeController {
         if (index >= 0) {
             this.clients.splice(index, 1)
         }
-        
+
         this.clients.push({
             id: id,
             name: name,
@@ -82,5 +82,4 @@ export class CodeController {
             this.clients[index] = value
         }
     }
-
 }

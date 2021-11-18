@@ -1,5 +1,5 @@
 import supabase from './database';
- 
+
 let caches: any = {} // TODO_GITHUB: We need to put the correct type.
 
 let queuedQueries: any = {} // TODO_GITHUB: We need to put the correct type.
@@ -26,7 +26,7 @@ const setCache = async (table: string, indexTo: any, callback: Function) => {
 
         caches[table][indexTo.value] = data[0]
     }
-    
+
     return true
 }
 
@@ -61,7 +61,6 @@ const queuedPushInterval = () => {
     // TODO_GITHUB: This field does not work fully dynamically, if a queue data other than content is sent, it goes over it. Objects need to be separated and multi-thread should be used.
     if (queuedQueries) {
         Object.entries(queuedQueries).forEach(([key, value]: any) => {
-            
             Object.entries(value).forEach(([k, v]) => {
                 const cache = getCache(key, k)
                 if (cache) {
@@ -71,7 +70,6 @@ const queuedPushInterval = () => {
                     delete queuedQueries[key][k]
                 }
             })
-
         });
     }
 }
