@@ -1,7 +1,7 @@
 {
   "name": "next-planning-app",
   "scripts": {
-    "build:server": "ts-node --optimize_for_size --max_old_space_size=460 --project tsconfig.server.json server/index.ts",
+    "build:server": "ts-node --max_old_space_size=512 --project tsconfig.server.json server/index.ts",
     "build:next": "next build && next export",
 
     "dev": "npm run build:server",
