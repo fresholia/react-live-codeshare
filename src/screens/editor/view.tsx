@@ -61,6 +61,28 @@ export default function CodeEditor() {
         dispatchEditorStateAction({type: 'SET_INPUT_VALUES', payload: {...editorState.fields, [key]: value}})
     }
 
+    const updateBadgePosition = (index: number) => {
+        const editor = editorRef.current
+        const targetClient = editorState.clients[index]
+
+        if (editor && editorState.clients && editorState.config.clientId) {
+            const position = editor.getPosition()
+            if (position && targetClient) {
+                let column = position.column // X
+                let line = position.lineNumber // Y
+
+                if (line) {
+                    const text = editor.getModel()?.getValueInRange({ startLineNumber: line, startColumn: 1, endLineNumber: line, endColumn: column }).replace(/ /g, '.')
+                    let scale = calculateSize(text ? text : '', {
+                        font: 'Inter'
+                    })
+                    const newClients = replaceInArray(editorState.clients, index, {...targetClient, position: [line, scale.width]})
+                    handleSetClients(newClients)
+                }
+            }
+        }
+    }
+
     const handleSocketCallbacks = (action: SocketStateCallbackActons) => {
         switch (action.type) {
             case 'SET_EDITOR_CONFIG':
@@ -76,7 +98,9 @@ export default function CodeEditor() {
                     const position = editor.getPosition()
                     editor.setValue(action.payload.join('\n'))
                     if (position) {
+                        let index = editorState.clients.findIndex((data: IClientActions) => data.id == editorState.config.clientId)
                         editor.setPosition(position)
+                        updateBadgePosition(index)
                     }
                 }
                 break;
@@ -165,26 +189,8 @@ export default function CodeEditor() {
                                     editorRef.current = editor
                                 }}
                                 onChange = {(value: string | undefined) => {
-                                    const editor = editorRef.current
                                     let index = editorState.clients.findIndex((data: IClientActions) => data.id == editorState.config.clientId)
-                                    const targetClient = editorState.clients[index]
-
-                                    if (editor && editorState.clients && editorState.config.clientId) {
-                                        const position = editor.getPosition()
-                                        if (position && targetClient) {
-                                            let column = position.column // X
-                                            let line = position.lineNumber // Y
-
-                                            if (line) {
-                                                const text = editor.getModel()?.getValueInRange({ startLineNumber: line, startColumn: 1, endLineNumber: line, endColumn: column }).replace(/ /g, '.')
-                                                let scale = calculateSize(text ? text : '', {
-                                                    font: 'Inter'
-                                                })
-                                                const newClients = replaceInArray(editorState.clients, index, {...targetClient, position: [line, scale.width]})
-                                                handleSetClients(newClients)
-                                            }
-                                        }
-                                    }
+                                    updateBadgePosition(index)
 
                                     saveFile(editorState.config.id, editorState.config.base_id, value, editorState.clients[index])
                                 }}
