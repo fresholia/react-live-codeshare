@@ -65,6 +65,5 @@ export function SocketProvider(callback: Function) {
 
         handleSocketEvents();
     }
-   
     return true
 }

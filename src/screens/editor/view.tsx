@@ -70,7 +70,15 @@ export default function CodeEditor() {
                 handleSetClients(action.payload)
                 break;
             case 'UPDATE_EDITOR_CONTENT':
-                handleChangeData('content', action.payload)
+                //handleChangeData('content', action.payload)
+                const editor = editorRef.current
+                if (editor) {
+                    const position = editor.getPosition()
+                    editor.setValue(action.payload.join('\n'))
+                    if (position) {
+                        editor.setPosition(position)
+                    }
+                }
                 break;
             default:
                 break;
@@ -96,8 +104,8 @@ export default function CodeEditor() {
                             clickHandlers: {
                                 setLanguage: (lang: string) => {
                                     if (pid && pid.length > 0)
-                                        updateCodeData(pid.toString(), 'language', lang);
-                                    
+                                        updateCodeData(pid.toString(), 'language', lang)
+
                                     handleChangeData('language', lang)
                                 },
                                 setTheme: (theme: string) => handleChangeData('theme', theme),
@@ -114,7 +122,6 @@ export default function CodeEditor() {
                                 <img alt="Language icon" src={`https://raw.githubusercontent.com/jesseweed/seti-ui/bc194faed12b10692807f47b97f0ff963e4c9f24/icons/${editorState.config.language}.svg`} width="32" height="32" />
                                 {editorState.config.name}
                             </div>
-                            
                             <div className={styles.rightActions}>
                                 {
                                 editorState.config.language === 'javascript' &&
@@ -128,9 +135,7 @@ export default function CodeEditor() {
                                     Delete this page
                                 </a>
                             </div>
-                        
                         </div>
-                        
                         <div className={styles.editorSection}>
                             <div className={styles.clientActions}>
                                 {
@@ -166,18 +171,15 @@ export default function CodeEditor() {
 
                                     if (editor && editorState.clients && editorState.config.clientId) {
                                         const position = editor.getPosition()
-                            
                                         if (position && targetClient) {
                                             let column = position.column // X
                                             let line = position.lineNumber // Y
 
                                             if (line) {
                                                 const text = editor.getModel()?.getValueInRange({ startLineNumber: line, startColumn: 1, endLineNumber: line, endColumn: column }).replace(/ /g, '.')
-                            
                                                 let scale = calculateSize(text ? text : '', {
                                                     font: 'Inter'
                                                 })
-                            
                                                 const newClients = replaceInArray(editorState.clients, index, {...targetClient, position: [line, scale.width]})
                                                 handleSetClients(newClients)
                                             }
