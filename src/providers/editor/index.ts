@@ -23,7 +23,7 @@ setInterval(() => {
 
     // TODO_GITHUB: We don't need send full content. We just need to send the changed lines.
     updateClients(viewData.baseid.toString(), content, viewData.localClientPosition) // send type array
-}, 300)
+}, 1000)
 
 const saveFile = (id: number, baseid: string, content: string | undefined, localClientPosition: IClientActions) => {
     viewData.id = id.toString()
