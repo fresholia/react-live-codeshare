@@ -1,5 +1,18 @@
 header {
   &.vertical {
+    display: flex;
+    width: 120px;
+    height: 100%;
+
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    background: rgb(19, 19, 19);
+    border-radius: 0px 20px 20px 0px;
+
+    padding-top: 4rem;
+
+    padding-bottom: 4rem;
   }
   &.horizontal {
     position: relative;

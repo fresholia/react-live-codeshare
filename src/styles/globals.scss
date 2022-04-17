@@ -6,7 +6,7 @@
 }
 
 body {
-  background: #000;
+  background: rgb(8, 8, 8);
   color: #fff;
   font-family: 'Inter', sans-serif;
 }
@@ -15,4 +15,13 @@ div.landing {
   max-width: 900px;
   margin: 0 auto;
   padding-top: 2rem;
+}
+
+div.code-layout {
+  position: relative;
+  display: grid;
+  grid-template: auto / 80px calc(100% - 80px);
+  height: 100vh;
+
+  overflow: hidden;
 }
