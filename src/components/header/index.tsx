@@ -3,7 +3,7 @@ import Image from 'next/image';
 import { Icon } from '@iconify/react';
 import { useRouter } from 'next/router';
 
-import navigatorItems from 'model/navigatorItems';
+import navigatorItems from 'core/model/navigatorItems';
 
 type Placement = 'vertical' | 'horizontal';
 interface HeaderProps {
