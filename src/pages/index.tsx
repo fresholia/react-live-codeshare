@@ -8,8 +8,10 @@ import styles from 'styles/home.module.scss';
 const Home: NextPageWithLayout = () => {
   return (
     <div className={styles.homeContainer}>
+      <h1 className={styles.bigText}>Write</h1>
+      <h1 className={styles.bigText}>Code</h1>
       <h1 className={styles.bigText}>
-        Are you <span>ready?</span>
+        <span>Together.</span>
       </h1>
       <span className={styles.gray}>
         Meet the simultaneous coding application developed with{' '}

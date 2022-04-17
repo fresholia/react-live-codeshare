@@ -10,12 +10,11 @@ div.homeContainer {
 }
 
 h1.bigText {
-  font-size: 6rem;
-  font-weight: 700;
+  font-size: 9rem;
+  font-weight: 900;
   color: #fff;
   text-align: center;
-  margin-bottom: 2rem;
-
+  line-height: 110px;
   span {
     position: relative;
     background-image: linear-gradient(
@@ -28,10 +27,24 @@ h1.bigText {
     background-clip: text;
     -webkit-background-clip: text;
     -webkit-text-fill-color: transparent;
+    animation: fadeBackground 0.2s ease infinite;
+
+    @keyframes fadeBackground {
+      0% {
+        background-position: 0%;
+      }
+      50% {
+        background-position: 200%;
+      }
+      100% {
+        background-position: 0%;
+      }
+    }
   }
 }
 
 span.gray {
+  margin-top: 3rem;
   color: #cfcfcfc4;
   font-size: 1.1rem;
 }

@@ -2,11 +2,10 @@ header {
   &.vertical {
     display: flex;
     width: 120px;
-    height: 100%;
 
     display: flex;
     flex-direction: column;
-    justify-content: space-between;
+    justify-content: flex-start;
     background: rgb(19, 19, 19);
     border-radius: 0px 20px 20px 0px;
 
@@ -31,7 +30,9 @@ header {
     text-align: center;
     justify-content: center;
     align-items: center;
-    gap: 1rem;
+    &.items {
+      gap: 1rem;
+    }
     a {
       text-decoration: none;
       color: #fff;
