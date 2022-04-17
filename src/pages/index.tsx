@@ -1,7 +1,6 @@
 import { NextPageWithLayout } from 'types/definitions';
 
 import Header from 'components/header';
-import Landing from 'layouts/landing';
 
 import styles from 'styles/home.module.scss';
 
@@ -23,10 +22,10 @@ const Home: NextPageWithLayout = () => {
 
 Home.getLayout = (page) => {
   return (
-    <Landing>
+    <div className="landing">
       <Header placement={'horizontal'} />
       {page}
-    </Landing>
+    </div>
   );
 };
 

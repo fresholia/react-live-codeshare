@@ -2,7 +2,6 @@ import type { GetServerSideProps } from 'next';
 import { NextPageWithLayout } from 'types/definitions';
 
 import Header from 'components/header';
-import CodeLayout from 'layouts/code';
 
 const Code: NextPageWithLayout = () => {
   return <>asdasdasd</>;
@@ -10,10 +9,10 @@ const Code: NextPageWithLayout = () => {
 
 Code.getLayout = (page) => {
   return (
-    <CodeLayout>
+    <div className="code-layout">
       <Header placement={'vertical'} />
       {page}
-    </CodeLayout>
+    </div>
   );
 };
 
