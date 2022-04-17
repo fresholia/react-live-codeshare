@@ -1,18 +1,40 @@
+import { useEffect } from 'react';
 import type { GetServerSideProps } from 'next';
 import { NextPageWithLayout } from 'types/definitions';
 
-import Header from 'components/header';
+import AppContextProvider from 'core/app/context/AppContextProvider';
 
-const Code: NextPageWithLayout = () => {
+import Header from 'components/header';
+import useAppContext from 'core/app/util/hooks/useAppContext';
+
+interface CodeProps {
+  isLoaded: boolean;
+}
+
+const Code: NextPageWithLayout = (props: any) => {
+  // TODO_GITHUB_ACTION: fix type
+  const { state, dispatch } = useAppContext();
+
+  const { isLoaded } = props;
+  useEffect(() => {
+    (async () => {
+      if (isLoaded) {
+        // dispatch
+      }
+    })();
+  }, [isLoaded]);
+
   return <>asdasdasd</>;
 };
 
 Code.getLayout = (page) => {
   return (
-    <div className="code-layout">
-      <Header placement={'vertical'} />
-      {page}
-    </div>
+    <AppContextProvider initialValue={{}}>
+      <div className="code-layout">
+        <Header placement={'vertical'} />
+        {page}
+      </div>
+    </AppContextProvider>
   );
 };
 
