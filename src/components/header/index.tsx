@@ -20,14 +20,20 @@ const Header = ({ placement }: HeaderProps): JSX.Element => {
           <a
             className={value.href == asPath ? styles.active : ''}
             key={index}
-            href="#"
+            href={value.href}
           >
             {value.name}
           </a>
         ))}
       </div>
       <div className={styles.socialItems}>
-        <Icon width={24} icon="fa-brands:github" />
+        <a
+          href="https://github.com/cleoppa/react-live-codeshare"
+          rel="noreferrer"
+          target="_blank"
+        >
+          <Icon width={24} icon="fa-brands:github" />
+        </a>
       </div>
     </header>
   );
