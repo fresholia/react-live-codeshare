@@ -1,12 +1,10 @@
 {
   "name": "next-planning-app",
   "scripts": {
-    "build:server": "ts-node --project tsconfig.server.json server/index.ts",
-    "build:next": "next build && next export",
-
-    "dev": "npm run build:server",
-    "build": "npm run build:next",
-    "start": "npm run build:server"
+    "dev": "next dev",
+    "build": "next build",
+    "start": "next start",
+    "lint": "next lint"
   },
   "dependencies": {
     "@monaco-editor/react": "^4.3.1",
