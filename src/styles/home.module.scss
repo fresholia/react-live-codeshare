@@ -1,0 +1,37 @@
+div.homeContainer {
+  position: relative;
+  display: flex;
+  width: 100%;
+  min-height: 500px;
+
+  align-items: center;
+  justify-content: center;
+  flex-direction: column;
+}
+
+h1.bigText {
+  font-size: 5rem;
+  font-weight: 700;
+  color: #fff;
+  text-align: center;
+  margin-bottom: 2rem;
+
+  span {
+    position: relative;
+    background-image: linear-gradient(
+      to left,
+      #b465da 0%,
+      #cf6cc9 33%,
+      #ee609c 66%,
+      #b465da 100%
+    );
+    background-clip: text;
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+  }
+}
+
+span.gray {
+  color: #cfcfcfc4;
+  font-size: 1.1rem;
+}
